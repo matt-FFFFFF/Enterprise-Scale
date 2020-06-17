@@ -55,8 +55,8 @@ jobs:
       inputs:
         script: |
           docker run --rm \
-            --volume /root:/root \
-            --volume `pwd`:`pwd` \
+            --volume=/root:/root \
+            --volume=`pwd`:`pwd` \
             --workdir `pwd` \
             --env INPUT_AZURE_CREDENTIALS \
             --env INPUT_GITHUB_EMAIL="$(GitHubEmail)"" \
