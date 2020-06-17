@@ -12,6 +12,7 @@ variables:
   GitHubUserName: AzOps
   AzOpsDebug: "false"
   AzOpsVerbose: "false"
+  group: credentials
 
 jobs:
 - job: push
@@ -57,7 +58,7 @@ jobs:
           docker run --rm \
             --volume `pwd`:`pwd` \
             --workdir `pwd` \
-            --env INPUT_AZURE_CREDENTIALS="$(AzureCredentials)" \
+            --env INPUT_AZURE_CREDENTIALS=$(AzureCredentials) \
             --env INPUT_GITHUB_EMAIL=$(GitHubEmail) \
             --env INPUT_GITHUB_USERNAME=$(GitHubUserName) \
             --env INPUT_GUTHUB_PULL_REQUEST="Azure Change Notification" \
