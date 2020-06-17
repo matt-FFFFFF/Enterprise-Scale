@@ -7,7 +7,7 @@ pool:
 
 variables:
   ContainerRegistry: AzOpsRegistry
-  ContainerImage: mattffffff/AzOpsADO:v0.0.1
+  ContainerImage: mattffffff/azopsado:v0.0.1
   GitHubEmail: noreply@azure.com
   GitHubUserName: AzOps
   AzOpsDebug: "false"
