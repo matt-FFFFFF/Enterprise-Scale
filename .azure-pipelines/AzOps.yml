@@ -12,20 +12,6 @@ variables:
   GitHubUserName: AzOps
   AzOpsDebug: "false"
   AzOpsVerbose: "false"
-#  repository_dispatch:
-#    types:
-#      - "activity-logs"
-#  pull_request:
-#    branches:
-#      - main
-#    paths:
-#      - "azops/**"
-#  pull_request_review:
-#    branches:
-#      - main
-#    types: [submitted]
-#    paths:
-#      - "azops/**"
 
 jobs:
 - job: push
