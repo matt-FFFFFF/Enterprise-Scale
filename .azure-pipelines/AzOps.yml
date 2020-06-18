@@ -149,7 +149,7 @@ jobs:
             --volume=/root:/root \
             --volume=`pwd`:`pwd` \
             --workdir `pwd` \
-            --env INPUT_AZURE_CREDENTIALS \
+            --env INPUT_AZURE_CREDENTIALS=$(AzureCredentials) \
             --env INPUT_GITHUB_EMAIL=$(GitHubEmail) \
             --env INPUT_GITHUB_USERNAME=$(GitHubUserName) \
             --env INPUT_GUTHUB_PULL_REQUEST="Azure Change Notification" \
@@ -167,7 +167,6 @@ jobs:
             $(ContainerImage)
       env:
         SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-        INPUT_AZURE_CREDENTIALS: $(AzureCredentials)
 
     - task: Docker@2
       displayName: Docker logout
