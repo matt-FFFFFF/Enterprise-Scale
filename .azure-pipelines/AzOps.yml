@@ -62,7 +62,7 @@ jobs:
             --env INPUT_AZURE_CREDENTIALS \
             --env INPUT_GITHUB_EMAIL=$(GitHubEmail) \
             --env INPUT_GITHUB_USERNAME=$(GitHubUserName) \
-            --env INPUT_GUTHUB_PULL_REQUEST="Azure Change Notification" \
+            --env INPUT_GITHUB_PULL_REQUEST="Azure Change Notification" \
             --env INPUT_SCMPLATFORM=AzureDevOps \
             --env INPUT_GITHUB_BASE_REF=$(AzopsHeadBranch) \
             --env INPUT_GITHUB_HEAD_REF=$(AzopsHeadBranch) \
@@ -152,7 +152,7 @@ jobs:
             --env INPUT_AZURE_CREDENTIALS="$(AzureCredentials)" \
             --env INPUT_GITHUB_EMAIL=$(GitHubEmail) \
             --env INPUT_GITHUB_USERNAME=$(GitHubUserName) \
-            --env INPUT_GUTHUB_PULL_REQUEST="Azure Change Notification" \
+            --env INPUT_GITHUB_PULL_REQUEST="Azure Change Notification" \
             --env INPUT_SCMPLATFORM=AzureDevOps \
             --env INPUT_GITHUB_BASE_REF=$(AzopsHeadBranch) \
             --env INPUT_GITHUB_HEAD_REF=$(AzopsHeadBranch) \
