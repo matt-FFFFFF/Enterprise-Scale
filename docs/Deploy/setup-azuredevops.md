@@ -36,10 +36,22 @@ Once you have selected your container registry, you need to build the container 
 
 2. Fork the [Azure/AzOps](https://github.com/Azure/AzOps) repo and use the AzOpsDockerBuild.yml pipeline. You can add the GitHub repo as a upstream remote to pull changes and rebuild the image.
 
+   * Change the ContainerRegistry variable in the pipeline yaml to suit your registry:
+
+```yaml
+  variables:
+    ContainerRegistry: AzOpsRegistry
+    ContainerTag: stable
+    ContainerRepository: <replaceme>
+    DockerVersion: '19.03.11'
+```
+
 ### Create a Service Connection to your container registry
 
-In your DevOps project, create a service connection to your container registry.
+In your DevOps projects, create a service connection to your container registry.
 Set the service connection name to:  `AzOpsRegistry`
+
+> This should be performed for the `AzOps` and `Enterprise-Scale` repos if you are using both
 
 ### Import the Enterprise-Scale repo
 
@@ -55,6 +67,19 @@ Add two new variables to the pipeline:
 * AzureCredentials **(secret)** - Set this to the JSON object created by the steps in the [setup GitHub](setup-github.md) page
 
   > Note: The JSON must have the double quotes escaped with a backslash, e.g. `"` becomes `\"`
+
+Finally, change the pipeline variable COntainerImage from `<replaceme>` to the 
+
+```yml
+variables:
+  ContainerRegistry: AzOpsRegistry
+  ContainerImage: <replaceme>:stable
+  GitHubEmail: noreply@azure.com
+  DockerVersion: '19.03.11'
+  GitHubUserName: AzOps
+  AzOpsDebug: "false"
+  AzOpsVerbose: "true"
+```
 
 ### Configure repo permissions
 
