@@ -154,8 +154,6 @@ jobs:
             --env INPUT_GITHUB_USERNAME=$(GitHubUserName) \
             --env INPUT_GITHUB_PULL_REQUEST="Azure Change Notification" \
             --env INPUT_SCMPLATFORM=AzureDevOps \
-            --env INPUT_GITHUB_BASE_REF=$(AzopsHeadBranch) \
-            --env INPUT_GITHUB_HEAD_REF=$(AzopsHeadBranch) \
             --env INPUT_MODE=$(AzOpsMode) \
             --env INPUT_DEBUG=$(AzOpsDebug) \
             --env INPUT_VERBOSE=$(AzOpsVerbose) \
