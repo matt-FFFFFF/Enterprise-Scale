@@ -12,7 +12,7 @@ variables:
   DockerVersion: '19.03.11'
   GitHubUserName: AzOps
   AzOpsDebug: "false"
-  AzOpsVerbose: "false"
+  AzOpsVerbose: "true"
 
 jobs:
 - job: push
