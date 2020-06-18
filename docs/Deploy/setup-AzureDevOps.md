@@ -70,6 +70,8 @@ The build service account `<Project> Build Service (<Organization>)` must have t
 In order for the pull request pipeline to run, set the main branch to require build verification from the AzOps pipeline.
 We suggest that the build verification is set top optional at this time, as the pipeline performs a commit, which will invalidate the build verification if it is set to required.
 
+We also recommend you allow only `squash` merge types from branches into `main`.
+
 ### Discover Environment
 
 If the AzOps pipeline is triggered manually *AND* has the pipeline variable `DoPull` set to `true`, the pipeline will discover the Azure environment.
