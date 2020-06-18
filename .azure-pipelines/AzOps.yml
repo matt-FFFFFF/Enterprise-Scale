@@ -81,6 +81,7 @@ jobs:
 
     - task: Docker@2
       displayName: Docker logout
+      condition: true
       inputs:
         command: logout
         containerRegistry: $(ContainerRegistry)
@@ -170,6 +171,7 @@ jobs:
 
     - task: Docker@2
       displayName: Docker logout
+      condition: true
       inputs:
         command: logout
         containerRegistry: $(ContainerRegistry)
