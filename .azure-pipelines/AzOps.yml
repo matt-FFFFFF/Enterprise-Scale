@@ -59,8 +59,8 @@ jobs:
             --volume=`pwd`:`pwd` \
             --workdir `pwd` \
             --env INPUT_AZURE_CREDENTIALS \
-            --env INPUT_GITHUB_EMAIL="$(GitHubEmail)" \
-            --env INPUT_GITHUB_USERNAME="$(GitHubUserName)" \
+            --env INPUT_GITHUB_EMAIL=$(GitHubEmail) \
+            --env INPUT_GITHUB_USERNAME=$(GitHubUserName) \
             --env INPUT_GUTHUB_PULL_REQUEST="Azure Change Notification" \
             --env INPUT_SCMPLATFORM=AzureDevOps \
             --env INPUT_GITHUB_BASE_REF=$(AzopsHeadBranch) \
@@ -68,7 +68,10 @@ jobs:
             --env INPUT_MODE=$(AzOpsMode) \
             --env INPUT_DEBUG=$(AzOpsDebug) \
             --env INPUT_VERBOSE=$(AzOpsVerbose) \
-            --env INPUT_ADO_COMMENTS=$(System.TeamFoundationCollectionUri)/_apis/git/repositories$(Build.Repository.ID)/pullRequests/$(System.PullRequest.PullRequestId)/threads?api-version=5.1 \
+            --env SYSTEM_PULLREQUEST_PULLREQUESTID \
+            --env SYSTEM_TEAMFOUNDATIONCOLLECTIONURI \
+            --env SYSTEM_TEAMPROJECTID \
+            --env BUILD_REPOSITORY_ID \
             --env SYSTEM_ACCESSTOKEN \
             $(ContainerImage)
       env:
@@ -145,10 +148,14 @@ jobs:
             --workdir `pwd` \
             --env INPUT_AZURE_CREDENTIALS="$(AzureCredentials)" \
             --env INPUT_SCMPLATFORM=AzureDevOps \
+            --env INPUT_GITHUB_EMAIL=$(GitHubEmail) \
+            --env INPUT_GITHUB_USERNAME=$(GitHubUserName) \
             --env INPUT_MODE=$(AzOpsMode) \
             --env INPUT_DEBUG=$(AzOpsDebug) \
             --env INPUT_VERBOSE=$(AzOpsVerbose) \
-            --env INPUT_ADO_PR=$(System.TeamFoundationCollectionUri)/_apis/git/repositories$(Build.Repository.ID)/pullRequests?api-version=5.1 \
+            --env SYSTEM_TEAMFOUNDATIONCOLLECTIONURI \
+            --env SYSTEM_TEAMPROJECTID \
+            --env BUILD_REPOSITORY_ID \
             --env SYSTEM_ACCESSTOKEN \
             $(ContainerImage)
       env:
