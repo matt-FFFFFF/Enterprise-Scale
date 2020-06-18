@@ -7,7 +7,7 @@ Please complete the following steps from the [setup GitHub](setup-github.md) pag
 * Step 3 - create SPN with tenant root '/' owner rights
 * Step 5 - Add the GitHub repo as an upstream remote (so you can pull in changes)
 
-Follow this guide, then resume the main documentation set at the heading *"Verify PR and merge with `main` branch"* on the [Discover Environment](discover-environemnt.md) page.
+Follow this guide, then resume the main documentation set at the heading on the [Discover Environment](discover-environemnt.md#verify-pr-and-merge-with-main-branch) page, at the *"Verify PR and merge with `main` branch"* heading.
 
 ## Implementation notes
 
@@ -82,4 +82,4 @@ The following steps will be executed automatically to ensure that the current Az
 * If changes are detected that is not represented in your `main` branch, it will create `system` branch representing your current configuration as ARM templates parameter file.
 * Create a Pull Request (PR) with the name `Azure Change Notification` (`system`  -> `main`)
 
-Please now continue on the [Discover Environment](discover-environemnt.md) page, at the *"Verify PR and merge with `main` branch"* heading.
+Please now continue on the [Discover Environment](discover-environemnt.md#verify-pr-and-merge-with-main-branch) page, at the *"Verify PR and merge with `main` branch"* heading.
