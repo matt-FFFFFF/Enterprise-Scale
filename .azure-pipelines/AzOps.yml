@@ -9,6 +9,7 @@ variables:
   ContainerRegistry: AzOpsRegistry
   ContainerImage: mattffffff/azopsado:v0.0.1
   GitHubEmail: noreply@azure.com
+  DockerVersion: '19.03.11'
   GitHubUserName: AzOps
   AzOpsDebug: "false"
   AzOpsVerbose: "false"
@@ -35,7 +36,7 @@ jobs:
     - task: DockerInstaller@0
       displayName: Install Docker
       inputs:
-        dockerVersion: '19.03.11'
+        dockerVersion: $(DockerVersion)
         releaseType: stable
           
     - task: Docker@2
@@ -124,7 +125,7 @@ jobs:
     - task: DockerInstaller@0
       displayName: Install Docker
       inputs:
-        dockerVersion: '19.03.11'
+        dockerVersion: $(DockerVersion)
         releaseType: stable
         
     - task: Docker@2
