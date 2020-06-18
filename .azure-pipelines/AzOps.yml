@@ -115,7 +115,7 @@ jobs:
   #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 - job: pull
-  condition: eq(variables['Build.Reason'], 'Manual')
+  condition: and(eq(variables['Build.Reason'], 'Manual'), eq(variables['DoPull', 'true']))
   variables:
     AzOpsMode: pull
   steps:
