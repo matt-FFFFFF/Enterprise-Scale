@@ -1,0 +1,36 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Id": "/providers/Microsoft.Management/managementGroups/8b4bb82a-d35a-4091-90f8-d4cc9c958851",
+        "Type": "/providers/Microsoft.Management/managementGroups",
+        "Name": "8b4bb82a-d35a-4091-90f8-d4cc9c958851",
+        "TenantId": "bb4c9e42-b982-4573-8741-cb71d8b92af4",
+        "DisplayName": "Platform",
+        "UpdatedTime": "0001-01-01T00:00:00Z",
+        "UpdatedBy": null,
+        "ParentId": "/providers/Microsoft.Management/managementGroups/d52a5cb0-5817-4f49-81c0-b1c8f72a80af",
+        "ParentName": "d52a5cb0-5817-4f49-81c0-b1c8f72a80af",
+        "ParentDisplayName": "Logicore",
+        "Children": [
+          {
+            "Type": "/subscriptions",
+            "Id": "/subscriptions/be3ae466-f78a-4e60-b972-d9c35a4e7b3b",
+            "Name": "be3ae466-f78a-4e60-b972-d9c35a4e7b3b",
+            "DisplayName": "LogicoreMSDNSub",
+            "Children": null
+          }
+        ],
+        "properties": {
+          "policyDefinitions": [],
+          "policySetDefinitions": [],
+          "policyAssignments": [],
+          "roleDefinitions": null,
+          "roleAssignments": null
+        }
+      }
+    }
+  }
+}
