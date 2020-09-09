@@ -1,0 +1,416 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Name": "Deploy-HUB",
+        "ResourceId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-HUB",
+        "ResourceName": "Deploy-HUB",
+        "ResourceType": "Microsoft.Authorization/policyDefinitions",
+        "SubscriptionId": null,
+        "PolicyDefinitionId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-HUB",
+        "Properties": {
+          "Description": "Deploys Azure VNet to be used as hub virtual network in desired regions",
+          "DisplayName": "Deploy-HUB",
+          "Mode": "All",
+          "Parameters": {
+            "HUB": {
+              "type": "Object",
+              "metadata": {
+                "description": "Object describing HUB",
+                "displayName": "HUB"
+              }
+            },
+            "azfw": {
+              "type": "Object",
+              "metadata": {
+                "description": "Object describing ExpressRoute gateway",
+                "displayName": "ergw"
+              },
+              "defaultValue": {}
+            },
+            "ergw": {
+              "type": "Object",
+              "metadata": {
+                "description": "Object describing ExpressRoute gateway",
+                "displayName": "ergw"
+              },
+              "defaultValue": {}
+            },
+            "hubName": {
+              "type": "String",
+              "metadata": {
+                "description": "Name of the Hub",
+                "displayName": "hubName"
+              }
+            },
+            "rgName": {
+              "type": "String",
+              "metadata": {
+                "description": "Provide name for resource group.",
+                "displayName": "rgName"
+              }
+            },
+            "vpngw": {
+              "type": "Object",
+              "metadata": {
+                "description": "Object describing VPN gateway",
+                "displayName": "vpngw"
+              },
+              "defaultValue": {}
+            }
+          },
+          "PolicyRule": {
+            "if": {
+              "allOf": [
+                {
+                  "equals": "Microsoft.Resources/subscriptions",
+                  "field": "type"
+                }
+              ]
+            },
+            "then": {
+              "details": {
+                "ResourceGroupName": "[parameters('rgName')]",
+                "deployment": {
+                  "location": "northeurope",
+                  "properties": {
+                    "mode": "incremental",
+                    "parameters": {
+                      "HUB": {
+                        "value": "[parameters('HUB')]"
+                      },
+                      "azfw": {
+                        "value": "[parameters('azfw')]"
+                      },
+                      "ergw": {
+                        "value": "[parameters('ergw')]"
+                      },
+                      "hubName": {
+                        "value": "[parameters('hubName')]"
+                      },
+                      "rgName": {
+                        "value": "[parameters('rgName')]"
+                      },
+                      "vpngw": {
+                        "value": "[parameters('vpngw')]"
+                      }
+                    },
+                    "template": {
+                      "$schema": "http://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json",
+                      "contentVersion": "1.0.0.0",
+                      "parameters": {
+                        "HUB": {
+                          "metadata": {
+                            "description": "Object describing HUB"
+                          },
+                          "type": "object"
+                        },
+                        "azfw": {
+                          "defaultValue": {},
+                          "metadata": {
+                            "description": "Object describing the Azure Firewall"
+                          },
+                          "type": "object"
+                        },
+                        "ergw": {
+                          "defaultValue": {},
+                          "metadata": {
+                            "description": "Object describing ExpressRoute gateway"
+                          },
+                          "type": "object"
+                        },
+                        "hubName": {
+                          "metadata": {
+                            "description": "Name of the HUB"
+                          },
+                          "type": "string"
+                        },
+                        "rgName": {
+                          "metadata": {
+                            "description": "Provide name for resource group.",
+                            "displayName": "rgName"
+                          },
+                          "type": "String"
+                        },
+                        "vpngw": {
+                          "defaultValue": {},
+                          "metadata": {
+                            "description": "Object describing VPN gateway"
+                          },
+                          "type": "object"
+                        }
+                      },
+                      "resources": [
+                        {
+                          "apiVersion": "2020-06-01",
+                          "location": "[deployment().location]",
+                          "name": "[parameters('rgName')]",
+                          "properties": {},
+                          "type": "Microsoft.Resources/resourceGroups"
+                        },
+                        {
+                          "apiVersion": "2020-06-01",
+                          "dependsOn": [
+                            "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+                          ],
+                          "name": "[concat(parameters('hubName'),'-', parameters('HUB').location)]",
+                          "properties": {
+                            "mode": "Incremental",
+                            "template": {
+                              "$schema": "https: //schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                              "contentVersion": "1.0.0.0",
+                              "parameters": {},
+                              "resources": [
+                                {
+                                  "apiVersion": "2020-04-01",
+                                  "location": "[parameters('HUB').location]",
+                                  "name": "[parameters('hubName')]",
+                                  "properties": {
+                                    "addressSpace": {
+                                      "addressPrefixes": [
+                                        "[parameters('HUB').addressPrefix]"
+                                      ]
+                                    },
+                                    "subnets": [
+                                      {
+                                        "name": "Infrastructure",
+                                        "properties": {
+                                          "addressPrefix": "[if(not(empty(parameters('HUB').subnets.infra)),parameters('HUB').subnets.infra, json('null'))]"
+                                        }
+                                      },
+                                      {
+                                        "name": "AzureFirewallSubnet",
+                                        "properties": {
+                                          "addressPrefix": "[if(not(empty(parameters('HUB').subnets.azfw)),parameters('HUB').subnets.azfw, json('null'))]"
+                                        }
+                                      },
+                                      {
+                                        "name": "GatewaySubnet",
+                                        "properties": {
+                                          "addressPrefix": "[if(not(empty(parameters('HUB').subnets.gw)),parameters('HUB').subnets.gw, json('null'))]"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "type": "Microsoft.Network/virtualNetworks"
+                                }
+                              ],
+                              "variables": {}
+                            }
+                          },
+                          "resourceGroup": "[parameters('rgName')]",
+                          "type": "Microsoft.Resources/deployments"
+                        },
+                        {
+                          "apiVersion": "2020-06-01",
+                          "condition": "[greater(length(parameters('vpngw')),0)]",
+                          "dependsOn": [
+                            "[concat(parameters('hubName'),'-', parameters('HUB').location)]"
+                          ],
+                          "name": "[concat(parameters('hubName'),'-vpngw')]",
+                          "properties": {
+                            "mode": "Incremental",
+                            "template": {
+                              "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                              "contentVersion": "1.0.0.0",
+                              "parameters": {},
+                              "resources": [
+                                {
+                                  "apiVersion": "2020-05-01",
+                                  "location": "[parameters('HUB').location]",
+                                  "name": "[concat(parameters('vpngw').name,'-pip')]",
+                                  "properties": {
+                                    "publicIPAllocationMethod": "Dynamic"
+                                  },
+                                  "tags": {},
+                                  "type": "Microsoft.Network/publicIpAddresses"
+                                },
+                                {
+                                  "apiVersion": "2020-05-01",
+                                  "dependsOn": [
+                                    "[concat('Microsoft.Network/publicIPAddresses/', parameters('vpngw').name,'-pip')]"
+                                  ],
+                                  "location": "[parameters('HUB').location]",
+                                  "name": "[parameters('vpngw').name]",
+                                  "properties": {
+                                    "gatewayType": "Vpn",
+                                    "ipConfigurations": [
+                                      {
+                                        "name": "default",
+                                        "properties": {
+                                          "privateIPAllocationMethod": "Dynamic",
+                                          "publicIpAddress": {
+                                            "id": "[concat(subscription().id,'/resourceGroups/',parameters('rgName'), '/providers','/Microsoft.Network/publicIPAddresses/', parameters('vpngw').name,'-pip')]"
+                                          },
+                                          "subnet": {
+                                            "id": "[concat(subscription().id,'/resourceGroups/',parameters('rgName'), '/providers','/Microsoft.Network/virtualNetworks/', parameters('hubName'),'/subnets/GatewaySubnet')]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "sku": {
+                                      "name": "[parameters('vpngw').sku]",
+                                      "tier": "[parameters('vpngw').sku]"
+                                    },
+                                    "vpnType": "[parameters('vpngw').vpnType]"
+                                  },
+                                  "tags": {},
+                                  "type": "Microsoft.Network/virtualNetworkGateways"
+                                }
+                              ],
+                              "variables": {}
+                            }
+                          },
+                          "resourceGroup": "[parameters('rgName')]",
+                          "type": "Microsoft.Resources/deployments"
+                        },
+                        {
+                          "apiVersion": "2020-06-01",
+                          "condition": "[greater(length(parameters('ergw')),0)]",
+                          "dependsOn": [
+                            "[concat(parameters('hubName'),'-', parameters('HUB').location)]"
+                          ],
+                          "name": "[concat(parameters('hubName'),'-ergw')]",
+                          "properties": {
+                            "mode": "Incremental",
+                            "template": {
+                              "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                              "contentVersion": "1.0.0.0",
+                              "parameters": {},
+                              "resources": [
+                                {
+                                  "apiVersion": "2020-05-01",
+                                  "location": "[parameters('HUB').location]",
+                                  "name": "[concat(parameters('ergw').name,'-pip')]",
+                                  "properties": {
+                                    "publicIPAllocationMethod": "Dynamic"
+                                  },
+                                  "tags": {},
+                                  "type": "Microsoft.Network/publicIpAddresses"
+                                },
+                                {
+                                  "apiVersion": "2020-05-01",
+                                  "dependsOn": [
+                                    "[concat('Microsoft.Network/publicIPAddresses/', parameters('ergw').name,'-pip')]"
+                                  ],
+                                  "location": "[parameters('HUB').location]",
+                                  "name": "[parameters('ergw').name]",
+                                  "properties": {
+                                    "gatewayType": "ExpressRoute",
+                                    "ipConfigurations": [
+                                      {
+                                        "name": "default",
+                                        "properties": {
+                                          "privateIPAllocationMethod": "Dynamic",
+                                          "publicIpAddress": {
+                                            "id": "[concat(subscription().id,'/resourceGroups/',parameters('rgName'), '/providers','/Microsoft.Network/publicIPAddresses/', parameters('ergw').name,'-pip')]"
+                                          },
+                                          "subnet": {
+                                            "id": "[concat(subscription().id,'/resourceGroups/',parameters('rgName'), '/providers','/Microsoft.Network/virtualNetworks/', parameters('hubName'),'/subnets/GatewaySubnet')]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "sku": {
+                                      "name": "[parameters('ergw').sku]",
+                                      "tier": "[parameters('ergw').sku]"
+                                    }
+                                  },
+                                  "tags": {},
+                                  "type": "Microsoft.Network/virtualNetworkGateways"
+                                }
+                              ],
+                              "variables": {}
+                            }
+                          },
+                          "resourceGroup": "[parameters('rgName')]",
+                          "type": "Microsoft.Resources/deployments"
+                        },
+                        {
+                          "apiVersion": "2020-06-01",
+                          "condition": "[greater(length(parameters('azfw')),0)]",
+                          "dependsOn": [
+                            "[concat(parameters('hubName'),'-', parameters('HUB').location)]"
+                          ],
+                          "name": "[concat(parameters('hubName'),'-azfw')]",
+                          "properties": {
+                            "mode": "Incremental",
+                            "template": {
+                              "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                              "contentVersion": "1.0.0.0",
+                              "parameters": {},
+                              "resources": [
+                                {
+                                  "apiVersion": "2020-05-01",
+                                  "location": "[parameters('azfw').location]",
+                                  "name": "[concat(parameters('azfw').name,'-pip')]",
+                                  "properties": {
+                                    "publicIPAllocationMethod": "Static"
+                                  },
+                                  "sku": {
+                                    "name": "Standard"
+                                  },
+                                  "tags": {},
+                                  "type": "Microsoft.Network/publicIpAddresses",
+                                  "zones": "[if(contains(parameters('azfw'),'pipZones'),parameters('azfw').pipZones,json('null'))]"
+                                },
+                                {
+                                  "apiVersion": "2020-05-01",
+                                  "dependsOn": [
+                                    "[concat(parameters('azfw').name,'-pip')]"
+                                  ],
+                                  "location": "[parameters('azfw').location]",
+                                  "name": "[parameters('azfw').name]",
+                                  "properties": {
+                                    "additionalProperties": "[if(contains(parameters('azfw'),'additionalProperties'),parameters('azfw').additionalProperties,json('null'))]",
+                                    "firewallPolicy": "[if(contains(parameters('azfw'),'firewallPolicy'),parameters('azfw').firewallPolicy,json('null'))]",
+                                    "ipConfigurations": [
+                                      {
+                                        "name": "[concat(parameters('azfw').name,'-pip')]",
+                                        "properties": {
+                                          "publicIPAddress": {
+                                            "id": "[concat(subscription().id,'/resourceGroups/',parameters('rgName'), '/providers','/Microsoft.Network/publicIPAddresses/', parameters('azfw').name,'-pip')]"
+                                          },
+                                          "subnet": {
+                                            "id": "[concat(subscription().id,'/resourceGroups/',parameters('rgName'), '/providers','/Microsoft.Network/virtualNetworks/', parameters('hubName'),'/subnets/AzureFirewallSubnet')]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "sku": "[if(contains(parameters('azfw'),'sku'),parameters('azfw').sku,json('null'))]",
+                                    "threatIntelMode": "[parameters('azfw').threatIntelMode]"
+                                  },
+                                  "tags": {},
+                                  "type": "Microsoft.Network/azureFirewalls",
+                                  "zones": "[if(contains(parameters('azfw'),'fwZones'),parameters('azfw').fwZones,json('null'))]"
+                                }
+                              ],
+                              "variables": {}
+                            }
+                          },
+                          "resourceGroup": "[parameters('rgName')]",
+                          "type": "Microsoft.Resources/deployments"
+                        }
+                      ],
+                      "variables": {}
+                    }
+                  }
+                },
+                "deploymentScope": "Subscription",
+                "existenceScope": "ResourceGroup",
+                "name": "[parameters('hubName')]",
+                "roleDefinitionIds": [
+                  "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                ],
+                "type": "Microsoft.Network/virtualNetworks"
+              },
+              "effect": "deployIfNotExists"
+            }
+          }
+        }
+      }
+    }
+  }
+}

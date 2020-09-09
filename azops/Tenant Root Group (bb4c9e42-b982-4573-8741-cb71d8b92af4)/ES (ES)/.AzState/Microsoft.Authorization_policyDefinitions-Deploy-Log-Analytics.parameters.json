@@ -1,0 +1,201 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Name": "Deploy-Log-Analytics",
+        "ResourceId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Log-Analytics",
+        "ResourceName": "Deploy-Log-Analytics",
+        "ResourceType": "Microsoft.Authorization/policyDefinitions",
+        "SubscriptionId": null,
+        "PolicyDefinitionId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Log-Analytics",
+        "Properties": {
+          "Description": "null",
+          "DisplayName": "Deploy-LogAnalytics",
+          "Mode": "All",
+          "Parameters": {
+            "automationAccountName": {
+              "type": "String",
+              "metadata": {
+                "description": "Provide name for automation account",
+                "displayName": "automationAccountName"
+              }
+            },
+            "automationRegion": {
+              "type": "String",
+              "metadata": {
+                "description": "Select Azure region for Automation account",
+                "displayName": "automationRegion"
+              }
+            },
+            "rgName": {
+              "type": "String",
+              "metadata": {
+                "description": "Provide name for resource group.",
+                "displayName": "rgName"
+              }
+            },
+            "workspaceName": {
+              "type": "String",
+              "metadata": {
+                "description": "Provide name for log analytics workspace",
+                "displayName": "workspaceName"
+              }
+            },
+            "workspaceRegion": {
+              "type": "String",
+              "metadata": {
+                "description": "Select Azure region for Log Analytics",
+                "displayName": "workspaceRegion"
+              }
+            }
+          },
+          "PolicyRule": {
+            "if": {
+              "allOf": [
+                {
+                  "equals": "Microsoft.Resources/subscriptions",
+                  "field": "type"
+                }
+              ]
+            },
+            "then": {
+              "details": {
+                "deployment": {
+                  "location": "northeurope",
+                  "properties": {
+                    "mode": "incremental",
+                    "parameters": {
+                      "automationAccountName": {
+                        "value": "[parameters('automationAccountName')]"
+                      },
+                      "automationRegion": {
+                        "value": "[parameters('automationRegion')]"
+                      },
+                      "rgName": {
+                        "value": "[parameters('rgName')]"
+                      },
+                      "workspaceName": {
+                        "value": "[parameters('workspaceName')]"
+                      },
+                      "workspaceRegion": {
+                        "value": "[parameters('workspaceRegion')]"
+                      }
+                    },
+                    "template": {
+                      "$schema": "http://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json",
+                      "contentVersion": "1.0.0.0",
+                      "outputs": {},
+                      "parameters": {
+                        "automationAccountName": {
+                          "type": "string"
+                        },
+                        "automationRegion": {
+                          "type": "string"
+                        },
+                        "rgName": {
+                          "type": "string"
+                        },
+                        "workspaceName": {
+                          "type": "string"
+                        },
+                        "workspaceRegion": {
+                          "type": "string"
+                        }
+                      },
+                      "resources": [
+                        {
+                          "apiVersion": "2018-05-01",
+                          "location": "[deployment().location]",
+                          "name": "[parameters('rgName')]",
+                          "properties": {},
+                          "type": "Microsoft.Resources/resourceGroups"
+                        },
+                        {
+                          "apiVersion": "2018-05-01",
+                          "dependsOn": [
+                            "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+                          ],
+                          "name": "log-analytics",
+                          "properties": {
+                            "mode": "Incremental",
+                            "template": {
+                              "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+                              "contentVersion": "1.0.0.0",
+                              "outputs": {},
+                              "parameters": {},
+                              "resources": [
+                                {
+                                  "apiversion": "2015-10-31",
+                                  "comments": "Automation account for ",
+                                  "location": "[parameters('AutomationRegion')]",
+                                  "name": "[parameters('AutomationAccountName')]",
+                                  "properties": {
+                                    "sku": {
+                                      "name": "OMS"
+                                    }
+                                  },
+                                  "type": "Microsoft.Automation/automationAccounts"
+                                },
+                                {
+                                  "apiVersion": "2017-03-15-preview",
+                                  "location": "[parameters('workspaceRegion')]",
+                                  "name": "[parameters('workspaceName')]",
+                                  "properties": {
+                                    "enableLogAccessUsingOnlyResourcePermissions": true,
+                                    "sku": {
+                                      "name": "pernode"
+                                    }
+                                  },
+                                  "resources": [
+                                    {
+                                      "apiVersion": "2015-11-01-preview",
+                                      "dependsOn": [
+                                        "[resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]",
+                                        "[resourceId('Microsoft.Automation/automationAccounts/', parameters('AutomationAccountName'))]"
+                                      ],
+                                      "name": "Automation",
+                                      "properties": {
+                                        "resourceId": "[concat(subscription().id, '/resourceGroups/', parameters('rgName'), '/providers/Microsoft.Automation/automationAccounts/', parameters('AutomationAccountName'))]"
+                                      },
+                                      "type": "linkedServices"
+                                    }
+                                  ],
+                                  "type": "Microsoft.OperationalInsights/workspaces"
+                                }
+                              ],
+                              "variables": {}
+                            }
+                          },
+                          "resourceGroup": "[parameters('rgName')]",
+                          "type": "Microsoft.Resources/deployments"
+                        }
+                      ],
+                      "variables": {}
+                    }
+                  }
+                },
+                "deploymentScope": "Subscription",
+                "existenceCondition": {
+                  "allOf": [
+                    {
+                      "field": "name",
+                      "like": "[parameters('workspaceName')]"
+                    }
+                  ]
+                },
+                "existenceScope": "Subscription",
+                "roleDefinitionIds": [
+                  "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                ],
+                "type": "Microsoft.OperationalInsights/workspaces"
+              },
+              "effect": "deployIfNotExists"
+            }
+          }
+        }
+      }
+    }
+  }
+}

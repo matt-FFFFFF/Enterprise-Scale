@@ -1,0 +1,88 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Name": "Deploy-Sql-Tde",
+        "ResourceId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-Tde",
+        "ResourceName": "Deploy-Sql-Tde",
+        "ResourceType": "Microsoft.Authorization/policyDefinitions",
+        "SubscriptionId": null,
+        "PolicyDefinitionId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-Tde",
+        "Properties": {
+          "Description": "Configures SQL DataBases",
+          "DisplayName": "Deploy-Sql-Tde",
+          "Mode": "All",
+          "Parameters": null,
+          "PolicyRule": {
+            "if": {
+              "equals": "Microsoft.Sql/servers/databases",
+              "field": "type"
+            },
+            "then": {
+              "details": {
+                "deployment": {
+                  "properties": {
+                    "mode": "incremental",
+                    "parameters": {
+                      "location": {
+                        "value": "[field('location')]"
+                      },
+                      "sqlServerDataBaseName": {
+                        "value": "[field('name')]"
+                      },
+                      "sqlServerName": {
+                        "value": "[first(split(field('fullname'),'/'))]"
+                      }
+                    },
+                    "template": {
+                      "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                      "contentVersion": "1.0.0.0",
+                      "outputs": {},
+                      "parameters": {
+                        "location": {
+                          "type": "string"
+                        },
+                        "sqlServerDataBaseName": {
+                          "type": "string"
+                        },
+                        "sqlServerName": {
+                          "type": "string"
+                        }
+                      },
+                      "resources": [
+                        {
+                          "apiVersion": "2014-04-01",
+                          "name": "[concat( parameters('sqlServerName'),'/',parameters('sqlServerDataBaseName'),'/current')]",
+                          "properties": {
+                            "status": "Enabled"
+                          },
+                          "type": "Microsoft.Sql/servers/databases/transparentDataEncryption"
+                        }
+                      ],
+                      "variables": {}
+                    }
+                  }
+                },
+                "existenceCondition": {
+                  "allOf": [
+                    {
+                      "equals": "Enabled",
+                      "field": "Microsoft.Sql/transparentDataEncryption.status"
+                    }
+                  ]
+                },
+                "roleDefinitionIds": [
+                  "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                ],
+                "type": "Microsoft.Sql/servers/databases/transparentDataEncryption"
+              },
+              "effect": "deployIfNotExists"
+            }
+          }
+        }
+      }
+    }
+  }
+}

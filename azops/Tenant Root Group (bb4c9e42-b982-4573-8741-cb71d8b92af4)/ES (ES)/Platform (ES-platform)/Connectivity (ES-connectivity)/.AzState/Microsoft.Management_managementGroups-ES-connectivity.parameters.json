@@ -1,0 +1,41 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Id": "/providers/Microsoft.Management/managementGroups/ES-connectivity",
+        "Type": "/providers/Microsoft.Management/managementGroups",
+        "Name": "ES-connectivity",
+        "TenantId": "bb4c9e42-b982-4573-8741-cb71d8b92af4",
+        "DisplayName": "Connectivity",
+        "UpdatedTime": "0001-01-01T00:00:00Z",
+        "UpdatedBy": null,
+        "ParentId": "/providers/Microsoft.Management/managementGroups/ES-platform",
+        "ParentName": "ES-platform",
+        "ParentDisplayName": "Platform",
+        "Children": null,
+        "properties": {
+          "policyDefinitions": [],
+          "policySetDefinitions": [],
+          "policyAssignments": [],
+          "roleDefinitions": [],
+          "roleAssignments": [
+            {
+              "Id": "/providers/Microsoft.Management/managementGroups/ES-connectivity/providers/Microsoft.Authorization/roleAssignments/fe11b92e-bf1f-400c-a10a-7a4f7b6d1796",
+              "Name": "fe11b92e-bf1f-400c-a10a-7a4f7b6d1796",
+              "properties": {
+                "DisplayName": "AzOpsTF",
+                "ObjectType": "ServicePrincipal",
+                "PrincipalId": "4c4b17c2-26c9-49a0-a122-6c51177bede3",
+                "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+                "RoleDefinitionName": "Owner"
+              },
+              "ResourceType": "Microsoft.Authorization/roleAssignments"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
