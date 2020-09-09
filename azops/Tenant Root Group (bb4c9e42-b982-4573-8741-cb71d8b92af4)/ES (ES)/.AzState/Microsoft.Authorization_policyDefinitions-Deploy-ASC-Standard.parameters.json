@@ -1,0 +1,288 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Name": "Deploy-ASC-Standard",
+        "ResourceId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Standard",
+        "ResourceName": "Deploy-ASC-Standard",
+        "ResourceType": "Microsoft.Authorization/policyDefinitions",
+        "SubscriptionId": null,
+        "PolicyDefinitionId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-ASC-Standard",
+        "Properties": {
+          "Description": "Ensures that subscriptions have Security Center Standard enabled.",
+          "DisplayName": "Deploy-ASC-Standard",
+          "Mode": "All",
+          "Parameters": {
+            "pricingTierAppServices": {
+              "type": "String",
+              "metadata": {
+                "displayName": "pricingTierAppServices"
+              },
+              "allowedValues": [
+                "Standard",
+                "Free"
+              ],
+              "defaultValue": "Standard"
+            },
+            "pricingTierContainerRegistry": {
+              "type": "String",
+              "metadata": {
+                "displayName": "pricingTierContainerRegistry"
+              },
+              "allowedValues": [
+                "Standard",
+                "Free"
+              ],
+              "defaultValue": "Standard"
+            },
+            "pricingTierKeyVaults": {
+              "type": "String",
+              "metadata": {
+                "displayName": "pricingTierKeyVaults"
+              },
+              "allowedValues": [
+                "Standard",
+                "Free"
+              ],
+              "defaultValue": "Standard"
+            },
+            "pricingTierKubernetesService": {
+              "type": "String",
+              "metadata": {
+                "displayName": "pricingTierKubernetesService"
+              },
+              "allowedValues": [
+                "Standard",
+                "Free"
+              ],
+              "defaultValue": "Standard"
+            },
+            "pricingTierSqlServers": {
+              "type": "String",
+              "metadata": {
+                "displayName": "pricingTierSqlServers"
+              },
+              "allowedValues": [
+                "Standard",
+                "Free"
+              ],
+              "defaultValue": "Standard"
+            },
+            "pricingTierStorageAccounts": {
+              "type": "String",
+              "metadata": {
+                "displayName": "pricingTierStorageAccounts"
+              },
+              "allowedValues": [
+                "Standard",
+                "Free"
+              ],
+              "defaultValue": "Standard"
+            },
+            "pricingTierVMs": {
+              "type": "String",
+              "metadata": {
+                "displayName": "pricingTierVMs"
+              },
+              "allowedValues": [
+                "Standard",
+                "Free"
+              ],
+              "defaultValue": "Standard"
+            }
+          },
+          "PolicyRule": {
+            "if": {
+              "allOf": [
+                {
+                  "equals": "Microsoft.Resources/subscriptions",
+                  "field": "type"
+                }
+              ]
+            },
+            "then": {
+              "details": {
+                "deployment": {
+                  "location": "northeurope",
+                  "properties": {
+                    "mode": "incremental",
+                    "parameters": {
+                      "pricingTierAppServices": {
+                        "value": "[parameters('pricingTierAppServices')]"
+                      },
+                      "pricingTierContainerRegistry": {
+                        "value": "[parameters('pricingTierContainerRegistry')]"
+                      },
+                      "pricingTierKeyVaults": {
+                        "value": "[parameters('pricingTierKeyVaults')]"
+                      },
+                      "pricingTierKubernetesService": {
+                        "value": "[parameters('pricingTierKubernetesService')]"
+                      },
+                      "pricingTierSqlServers": {
+                        "value": "[parameters('pricingTierSqlServers')]"
+                      },
+                      "pricingTierStorageAccounts": {
+                        "value": "[parameters('pricingTierStorageAccounts')]"
+                      },
+                      "pricingTierVMs": {
+                        "value": "[parameters('pricingTierVMs')]"
+                      }
+                    },
+                    "template": {
+                      "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                      "contentVersion": "1.0.0.0",
+                      "outputs": {},
+                      "parameters": {
+                        "pricingTierAppServices": {
+                          "metadata": {
+                            "description": "pricingTierAppServices"
+                          },
+                          "type": "string"
+                        },
+                        "pricingTierContainerRegistry": {
+                          "metadata": {
+                            "description": "ContainerRegistry"
+                          },
+                          "type": "string"
+                        },
+                        "pricingTierKeyVaults": {
+                          "metadata": {
+                            "description": "KeyVaults"
+                          },
+                          "type": "string"
+                        },
+                        "pricingTierKubernetesService": {
+                          "metadata": {
+                            "description": "KubernetesService"
+                          },
+                          "type": "string"
+                        },
+                        "pricingTierSqlServers": {
+                          "metadata": {
+                            "description": "pricingTierSqlServers"
+                          },
+                          "type": "string"
+                        },
+                        "pricingTierStorageAccounts": {
+                          "metadata": {
+                            "description": "pricingTierStorageAccounts"
+                          },
+                          "type": "string"
+                        },
+                        "pricingTierVMs": {
+                          "metadata": {
+                            "description": "pricingTierVMs"
+                          },
+                          "type": "string"
+                        }
+                      },
+                      "resources": [
+                        {
+                          "apiVersion": "2018-06-01",
+                          "name": "VirtualMachines",
+                          "properties": {
+                            "pricingTier": "[parameters('pricingTierVMs')]"
+                          },
+                          "type": "Microsoft.Security/pricings"
+                        },
+                        {
+                          "apiVersion": "2018-06-01",
+                          "dependsOn": [
+                            "[concat('Microsoft.Security/pricings/VirtualMachines')]"
+                          ],
+                          "name": "StorageAccounts",
+                          "properties": {
+                            "pricingTier": "[parameters('pricingTierStorageAccounts')]"
+                          },
+                          "type": "Microsoft.Security/pricings"
+                        },
+                        {
+                          "apiVersion": "2018-06-01",
+                          "dependsOn": [
+                            "[concat('Microsoft.Security/pricings/StorageAccounts')]"
+                          ],
+                          "name": "AppServices",
+                          "properties": {
+                            "pricingTier": "[parameters('pricingTierAppServices')]"
+                          },
+                          "type": "Microsoft.Security/pricings"
+                        },
+                        {
+                          "apiVersion": "2018-06-01",
+                          "dependsOn": [
+                            "[concat('Microsoft.Security/pricings/AppServices')]"
+                          ],
+                          "name": "SqlServers",
+                          "properties": {
+                            "pricingTier": "[parameters('pricingTierSqlServers')]"
+                          },
+                          "type": "Microsoft.Security/pricings"
+                        },
+                        {
+                          "apiVersion": "2018-06-01",
+                          "dependsOn": [
+                            "[concat('Microsoft.Security/pricings/SqlServers')]"
+                          ],
+                          "name": "KeyVaults",
+                          "properties": {
+                            "pricingTier": "[parameters('pricingTierKeyVaults')]"
+                          },
+                          "type": "Microsoft.Security/pricings"
+                        },
+                        {
+                          "apiVersion": "2018-06-01",
+                          "dependsOn": [
+                            "[concat('Microsoft.Security/pricings/KeyVaults')]"
+                          ],
+                          "name": "KubernetesService",
+                          "properties": {
+                            "pricingTier": "[parameters('pricingTierKubernetesService')]"
+                          },
+                          "type": "Microsoft.Security/pricings"
+                        },
+                        {
+                          "apiVersion": "2018-06-01",
+                          "dependsOn": [
+                            "[concat('Microsoft.Security/pricings/KubernetesService')]"
+                          ],
+                          "name": "ContainerRegistry",
+                          "properties": {
+                            "pricingTier": "[parameters('pricingTierContainerRegistry')]"
+                          },
+                          "type": "Microsoft.Security/pricings"
+                        }
+                      ],
+                      "variables": {}
+                    }
+                  }
+                },
+                "deploymentScope": "subscription",
+                "existenceCondition": {
+                  "allOf": [
+                    {
+                      "equals": "Standard",
+                      "field": "Microsoft.Security/pricings/pricingTier"
+                    },
+                    {
+                      "equals": "Microsoft.Security/pricings",
+                      "field": "type"
+                    }
+                  ]
+                },
+                "existenceScope": "subscription",
+                "roleDefinitionIds": [
+                  "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+                ],
+                "type": "Microsoft.Security/pricings"
+              },
+              "effect": "deployIfNotExists"
+            }
+          }
+        }
+      }
+    }
+  }
+}
