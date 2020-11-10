@@ -11,20 +11,20 @@
         "SubscriptionId": null,
         "PolicyDefinitionId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deny-Subnet-Without-Nsg",
         "Properties": {
-          "Description": "null",
+          "Description": null,
           "DisplayName": "Deny-Subnets-Without-NSG",
           "Mode": "All",
-          "Parameters": null,
+          "Parameters": {},
           "PolicyRule": {
             "if": {
               "allOf": [
                 {
-                  "equals": "Microsoft.Network/virtualNetworks/subnets",
-                  "field": "type"
+                  "field": "type",
+                  "equals": "Microsoft.Network/virtualNetworks/subnets"
                 },
                 {
-                  "exists": "false",
-                  "field": "Microsoft.Network/virtualNetworks/subnets/networkSecurityGroup.id"
+                  "field": "Microsoft.Network/virtualNetworks/subnets/networkSecurityGroup.id",
+                  "exists": "false"
                 }
               ]
             },

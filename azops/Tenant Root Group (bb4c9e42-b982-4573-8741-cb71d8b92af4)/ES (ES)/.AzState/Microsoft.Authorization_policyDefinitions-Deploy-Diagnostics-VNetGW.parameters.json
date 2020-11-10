@@ -18,55 +18,79 @@
             "logAnalytics": {
               "type": "String",
               "metadata": {
-                "description": "Select the Log Analytics workspace from dropdown list",
                 "displayName": "Log Analytics workspace",
+                "description": "Select the Log Analytics workspace from dropdown list",
                 "strongType": "omsWorkspace"
               }
             }
           },
           "PolicyRule": {
             "if": {
-              "equals": "Microsoft.Network/virtualNetworkGateways",
-              "field": "type"
+              "field": "type",
+              "equals": "Microsoft.Network/virtualNetworkGateways"
             },
             "then": {
+              "effect": "deployIfNotExists",
               "details": {
+                "type": "Microsoft.Insights/diagnosticSettings",
+                "name": "setByPolicy",
+                "existenceCondition": {
+                  "allOf": [
+                    {
+                      "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+                      "equals": "true"
+                    },
+                    {
+                      "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled",
+                      "equals": "true"
+                    },
+                    {
+                      "field": "Microsoft.Insights/diagnosticSettings/workspaceId",
+                      "equals": "[parameters('logAnalytics')]"
+                    }
+                  ]
+                },
+                "roleDefinitionIds": [
+                  "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                ],
                 "deployment": {
                   "properties": {
                     "mode": "incremental",
-                    "parameters": {
-                      "location": {
-                        "value": "[field('location')]"
-                      },
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      },
-                      "resourceName": {
-                        "value": "[field('name')]"
-                      }
-                    },
                     "template": {
                       "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
                       "contentVersion": "1.0.0.0",
-                      "outputs": {},
                       "parameters": {
-                        "location": {
+                        "resourceName": {
                           "type": "string"
                         },
                         "logAnalytics": {
                           "type": "string"
                         },
-                        "resourceName": {
+                        "location": {
                           "type": "string"
                         }
                       },
+                      "variables": {},
                       "resources": [
                         {
+                          "type": "Microsoft.Network/virtualNetworkGateways/providers/diagnosticSettings",
                           "apiVersion": "2017-05-01-preview",
-                          "dependsOn": [],
-                          "location": "[parameters('location')]",
                           "name": "[concat(parameters('resourceName'), '/', 'Microsoft.Insights/setByPolicy')]",
+                          "location": "[parameters('location')]",
+                          "dependsOn": [],
                           "properties": {
+                            "workspaceId": "[parameters('logAnalytics')]",
+                            "metrics": [
+                              {
+                                "category": "AllMetrics",
+                                "enabled": true,
+                                "retentionPolicy": {
+                                  "days": 0,
+                                  "enabled": false
+                                },
+                                "timeGrain": null
+                              }
+                            ],
                             "logs": [
                               {
                                 "category": "GatewayDiagnosticLog",
@@ -92,49 +116,26 @@
                                 "category": "TunnelDiagnosticLog",
                                 "enabled": true
                               }
-                            ],
-                            "metrics": [
-                              {
-                                "category": "AllMetrics",
-                                "enabled": true,
-                                "retentionPolicy": {
-                                  "days": 0,
-                                  "enabled": false
-                                }
-                              }
-                            ],
-                            "workspaceId": "[parameters('logAnalytics')]"
-                          },
-                          "type": "Microsoft.Network/virtualNetworkGateways/providers/diagnosticSettings"
+                            ]
+                          }
                         }
                       ],
-                      "variables": {}
+                      "outputs": {}
+                    },
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      },
+                      "location": {
+                        "value": "[field('location')]"
+                      },
+                      "resourceName": {
+                        "value": "[field('name')]"
+                      }
                     }
                   }
-                },
-                "existenceCondition": {
-                  "allOf": [
-                    {
-                      "equals": "true",
-                      "field": "Microsoft.Insights/diagnosticSettings/logs.enabled"
-                    },
-                    {
-                      "equals": "true",
-                      "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled"
-                    },
-                    {
-                      "equals": "[parameters('logAnalytics')]",
-                      "field": "Microsoft.Insights/diagnosticSettings/workspaceId"
-                    }
-                  ]
-                },
-                "name": "setByPolicy",
-                "roleDefinitionIds": [
-                  "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
-                ],
-                "type": "Microsoft.Insights/diagnosticSettings"
-              },
-              "effect": "deployIfNotExists"
+                }
+              }
             }
           }
         }

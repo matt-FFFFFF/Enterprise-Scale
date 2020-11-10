@@ -11,16 +11,16 @@
         "SubscriptionId": null,
         "PolicyDefinitionId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deny-AppGW-Without-WAF",
         "Properties": {
-          "Description": "null",
+          "Description": null,
           "DisplayName": "Deny-AppGW-Without-WAF",
           "Mode": "All",
-          "Parameters": null,
+          "Parameters": {},
           "PolicyRule": {
             "if": {
               "allOf": [
                 {
-                  "equals": "Microsoft.Network/applicationGateways",
-                  "field": "type"
+                  "field": "type",
+                  "equals": "Microsoft.Network/applicationGateways"
                 },
                 {
                   "field": "Microsoft.Network/applicationGateways/sku.name",

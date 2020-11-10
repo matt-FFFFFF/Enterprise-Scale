@@ -1,0 +1,41 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Id": "/providers/Microsoft.Management/managementGroups/ES-decommissioned",
+        "Type": "/providers/Microsoft.Management/managementGroups",
+        "Name": "ES-decommissioned",
+        "TenantId": "bb4c9e42-b982-4573-8741-cb71d8b92af4",
+        "DisplayName": "ES-decommissioned",
+        "UpdatedTime": "0001-01-01T00:00:00Z",
+        "UpdatedBy": null,
+        "ParentId": "/providers/Microsoft.Management/managementGroups/ES",
+        "ParentName": "ES",
+        "ParentDisplayName": "ES",
+        "Children": null,
+        "properties": {
+          "policyDefinitions": [],
+          "policySetDefinitions": [],
+          "policyAssignments": [],
+          "roleDefinitions": [],
+          "roleAssignments": [
+            {
+              "Id": "/providers/Microsoft.Management/managementGroups/ES-decommissioned/providers/Microsoft.Authorization/roleAssignments/a070bb8a-287e-4d11-ad7e-a7f51385c2f1",
+              "Name": "a070bb8a-287e-4d11-ad7e-a7f51385c2f1",
+              "properties": {
+                "DisplayName": "Matt White",
+                "ObjectType": "User",
+                "PrincipalId": "4123d587-d7a5-4cd0-9ee4-ca1a8ddbfcd3",
+                "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+                "RoleDefinitionName": "Owner"
+              },
+              "ResourceType": "Microsoft.Authorization/roleAssignments"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

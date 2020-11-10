@@ -28,22 +28,22 @@
           "PolicyDefinitionGroups": null,
           "PolicyDefinitions": [
             {
-              "policyDefinitionReferenceId": "DeploySqlTde",
+              "policyDefinitionReferenceId": "2726164842163763070",
               "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-Tde",
               "parameters": {}
             },
             {
-              "policyDefinitionReferenceId": "DeploySqlSecurityAlertPolicies",
+              "policyDefinitionReferenceId": "16762661646412862654",
               "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-SecurityAlertPolicies",
               "parameters": {}
             },
             {
-              "policyDefinitionReferenceId": "DeploySqlAuditingSettings",
+              "policyDefinitionReferenceId": "4228536816889202623",
               "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-AuditingSettings",
               "parameters": {}
             },
             {
-              "policyDefinitionReferenceId": "DeploySqlvulnerabilityAssessments",
+              "policyDefinitionReferenceId": "12972565938168245322",
               "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Sql-vulnerabilityAssessments",
               "parameters": {
                 "vulnerabilityAssessmentsEmail": {

@@ -14,11 +14,11 @@
           "Description": "Denies creation of Public IPs under the assigned scope.",
           "DisplayName": "Deny-PublicIP",
           "Mode": "All",
-          "Parameters": null,
+          "Parameters": {},
           "PolicyRule": {
             "if": {
-              "equals": "Microsoft.Network/publicIPAddresses",
-              "field": "type"
+              "field": "type",
+              "equals": "Microsoft.Network/publicIPAddresses"
             },
             "then": {
               "effect": "deny"

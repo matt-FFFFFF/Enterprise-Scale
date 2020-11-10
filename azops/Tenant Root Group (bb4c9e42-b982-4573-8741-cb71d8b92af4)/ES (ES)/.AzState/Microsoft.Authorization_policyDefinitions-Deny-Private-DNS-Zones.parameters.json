@@ -11,14 +11,14 @@
         "SubscriptionId": null,
         "PolicyDefinitionId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deny-Private-DNS-Zones",
         "Properties": {
-          "Description": "Denies creation of Private DNS Zones at the assigned scope.",
+          "Description": "Denies creation of Private DNS Zones under the assigned scope",
           "DisplayName": "Deny-Private-DNS-Zones",
           "Mode": "All",
-          "Parameters": null,
+          "Parameters": {},
           "PolicyRule": {
             "if": {
-              "equals": "Microsoft.Network/privateDnsZones",
-              "field": "type"
+              "field": "type",
+              "equals": "Microsoft.Network/privateDnsZones"
             },
             "then": {
               "effect": "deny"

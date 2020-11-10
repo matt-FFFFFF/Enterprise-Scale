@@ -19,8 +19,8 @@
             "if": {
               "allOf": [
                 {
-                  "equals": "Microsoft.DocumentDB/databaseAccounts",
-                  "field": "type"
+                  "field": "type",
+                  "equals": "Microsoft.DocumentDB/databaseAccounts"
                 },
                 {
                   "field": "Microsoft.DocumentDB/databaseAccounts/publicNetworkAccess",
