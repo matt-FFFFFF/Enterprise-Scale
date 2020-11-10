@@ -25,7 +25,7 @@
                 "Type": "/providers/Microsoft.Management/managementGroups",
                 "Id": "/providers/Microsoft.Management/managementGroups/ES-platform",
                 "Name": "ES-platform",
-                "DisplayName": "Platform",
+                "DisplayName": "ES-platform",
                 "Children": [
                   {
                     "Type": "/providers/Microsoft.Management/managementGroups",
@@ -45,7 +45,7 @@
                     "Type": "/providers/Microsoft.Management/managementGroups",
                     "Id": "/providers/Microsoft.Management/managementGroups/ES-management",
                     "Name": "ES-management",
-                    "DisplayName": "Management",
+                    "DisplayName": "ES-management",
                     "Children": [
                       {
                         "Type": "/subscriptions",
@@ -62,14 +62,36 @@
                 "Type": "/providers/Microsoft.Management/managementGroups",
                 "Id": "/providers/Microsoft.Management/managementGroups/ES-landingzones",
                 "Name": "ES-landingzones",
-                "DisplayName": "LandingZones",
-                "Children": null
+                "DisplayName": "ES-landingzones",
+                "Children": [
+                  {
+                    "Type": "/providers/Microsoft.Management/managementGroups",
+                    "Id": "/providers/Microsoft.Management/managementGroups/ES-online",
+                    "Name": "ES-online",
+                    "DisplayName": "ES-online",
+                    "Children": null
+                  }
+                ]
               },
               {
                 "Type": "/providers/Microsoft.Management/managementGroups",
                 "Id": "/providers/Microsoft.Management/managementGroups/ES-sandbox",
                 "Name": "ES-sandbox",
                 "DisplayName": "Sandbox",
+                "Children": null
+              },
+              {
+                "Type": "/providers/Microsoft.Management/managementGroups",
+                "Id": "/providers/Microsoft.Management/managementGroups/ES-sandboxes",
+                "Name": "ES-sandboxes",
+                "DisplayName": "ES-sandboxes",
+                "Children": null
+              },
+              {
+                "Type": "/providers/Microsoft.Management/managementGroups",
+                "Id": "/providers/Microsoft.Management/managementGroups/ES-decommissioned",
+                "Name": "ES-decommissioned",
+                "DisplayName": "ES-decommissioned",
                 "Children": null
               }
             ]

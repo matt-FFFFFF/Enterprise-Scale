@@ -14,11 +14,11 @@
           "Description": "Denies creation of ER Peerings under the assigned scope.",
           "DisplayName": "Deny-ERPeering",
           "Mode": "All",
-          "Parameters": null,
+          "Parameters": {},
           "PolicyRule": {
             "if": {
-              "equals": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-              "field": "type"
+              "field": "type",
+              "equals": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings"
             },
             "then": {
               "effect": "deny"

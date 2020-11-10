@@ -19,8 +19,8 @@
             "if": {
               "allOf": [
                 {
-                  "equals": "Microsoft.DBforMySQL/servers",
-                  "field": "type"
+                  "field": "type",
+                  "equals": "Microsoft.DBforMySQL/servers"
                 },
                 {
                   "field": "Microsoft.DBforMySQL/servers/publicNetworkAccess",

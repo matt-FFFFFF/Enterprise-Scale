@@ -18,8 +18,8 @@
             "logAnalytics": {
               "type": "String",
               "metadata": {
-                "description": "Select Log Analytics workspace from dropdown list",
                 "displayName": "Primary Log Analytics workspace",
+                "description": "Select Log Analytics workspace from dropdown list",
                 "strongType": "omsWorkspace"
               }
             }
@@ -28,37 +28,50 @@
             "if": {
               "allOf": [
                 {
-                  "equals": "Microsoft.Resources/subscriptions",
-                  "field": "type"
+                  "field": "type",
+                  "equals": "Microsoft.Resources/subscriptions"
                 }
               ]
             },
             "then": {
+              "effect": "deployIfNotExists",
               "details": {
+                "type": "Microsoft.Insights/diagnosticSettings",
+                "deploymentScope": "Subscription",
+                "existenceScope": "Subscription",
+                "existenceCondition": {
+                  "allOf": [
+                    {
+                      "field": "Microsoft.Insights/diagnosticSettings/logs.enabled",
+                      "equals": "true"
+                    },
+                    {
+                      "field": "Microsoft.Insights/diagnosticSettings/workspaceId",
+                      "equals": "[parameters('logAnalytics')]"
+                    }
+                  ]
+                },
                 "deployment": {
                   "location": "northeurope",
                   "properties": {
                     "mode": "incremental",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    },
                     "template": {
                       "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
                       "contentVersion": "1.0.0.0",
-                      "outputs": {},
                       "parameters": {
                         "logAnalytics": {
                           "type": "string"
                         }
                       },
+                      "variables": {},
                       "resources": [
                         {
+                          "name": "subscriptionLogsToLogAnalytics",
+                          "type": "Microsoft.Insights/diagnosticSettings",
                           "apiVersion": "2017-05-01-preview",
                           "location": "Global",
-                          "name": "subscriptionLogsToLogAnalytics",
                           "properties": {
+                            "workspaceId": "[parameters('logAnalytics')]",
                             "logs": [
                               {
                                 "category": "Administrative",
@@ -92,36 +105,23 @@
                                 "category": "ResourceHealth",
                                 "enabled": true
                               }
-                            ],
-                            "workspaceId": "[parameters('logAnalytics')]"
-                          },
-                          "type": "Microsoft.Insights/diagnosticSettings"
+                            ]
+                          }
                         }
                       ],
-                      "variables": {}
+                      "outputs": {}
+                    },
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
                     }
                   }
                 },
-                "deploymentScope": "Subscription",
-                "existenceCondition": {
-                  "allOf": [
-                    {
-                      "equals": "true",
-                      "field": "Microsoft.Insights/diagnosticSettings/logs.enabled"
-                    },
-                    {
-                      "equals": "[parameters('logAnalytics')]",
-                      "field": "Microsoft.Insights/diagnosticSettings/workspaceId"
-                    }
-                  ]
-                },
-                "existenceScope": "Subscription",
                 "roleDefinitionIds": [
                   "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
-                ],
-                "type": "Microsoft.Insights/diagnosticSettings"
-              },
-              "effect": "deployIfNotExists"
+                ]
+              }
             }
           }
         }

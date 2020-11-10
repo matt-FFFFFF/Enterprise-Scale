@@ -14,15 +14,15 @@
           "Description": "When a Key Vault is created with out soft delete enabled then this will add it.",
           "DisplayName": "Append-KV-SoftDelete",
           "Mode": "All",
-          "Parameters": null,
+          "Parameters": {},
           "PolicyRule": {
             "if": {
               "anyOf": [
                 {
                   "allOf": [
                     {
-                      "equals": "Microsoft.KeyVault/vaults",
-                      "field": "type"
+                      "field": "type",
+                      "equals": "Microsoft.KeyVault/vaults"
                     },
                     {
                       "field": "Microsoft.KeyVault/vaults/enableSoftDelete",
@@ -33,13 +33,13 @@
               ]
             },
             "then": {
+              "effect": "append",
               "details": [
                 {
                   "field": "Microsoft.KeyVault/vaults/enableSoftDelete",
                   "value": true
                 }
-              ],
-              "effect": "append"
+              ]
             }
           }
         }

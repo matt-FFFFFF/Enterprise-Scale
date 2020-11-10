@@ -19,8 +19,8 @@
             "if": {
               "allOf": [
                 {
-                  "equals": "Microsoft.DBforPostgreSQL/servers",
-                  "field": "type"
+                  "field": "type",
+                  "equals": "Microsoft.DBforPostgreSQL/servers"
                 },
                 {
                   "field": "Microsoft.DBforPostgreSQL/servers/publicNetworkAccess",

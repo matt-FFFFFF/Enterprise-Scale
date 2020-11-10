@@ -18,23 +18,23 @@
             "ddosName": {
               "type": "String",
               "metadata": {
-                "description": "Name of the Virtual WAN",
-                "displayName": "ddosName"
+                "displayName": "ddosName",
+                "description": "Name of the Virtual WAN"
               }
             },
             "ddosRegion": {
               "type": "String",
               "metadata": {
-                "description": "Select Azure region for Virtual WAN",
                 "displayName": "ddosRegion",
+                "description": "Select Azure region for Virtual WAN",
                 "strongType": "location"
               }
             },
             "rgName": {
               "type": "String",
               "metadata": {
-                "description": "Provide name for resource group.",
-                "displayName": "rgName"
+                "displayName": "rgName",
+                "description": "Provide name for resource group."
               }
             }
           },
@@ -42,92 +42,92 @@
             "if": {
               "allOf": [
                 {
-                  "equals": "Microsoft.Resources/subscriptions",
-                  "field": "type"
+                  "field": "type",
+                  "equals": "Microsoft.Resources/subscriptions"
                 }
               ]
             },
             "then": {
+              "effect": "deployIfNotExists",
               "details": {
+                "type": "Microsoft.Network/ddosProtectionPlans",
+                "deploymentScope": "Subscription",
+                "existenceScope": "ResourceGroup",
+                "resourceGroupName": "[parameters('rgName')]",
+                "name": "[parameters('ddosName')]",
+                "roleDefinitionIds": [
+                  "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                ],
                 "deployment": {
                   "location": "northeurope",
                   "properties": {
                     "mode": "incremental",
                     "parameters": {
+                      "rgName": {
+                        "value": "[parameters('rgName')]"
+                      },
                       "ddosname": {
                         "value": "[parameters('ddosname')]"
                       },
                       "ddosregion": {
                         "value": "[parameters('ddosRegion')]"
-                      },
-                      "rgName": {
-                        "value": "[parameters('rgName')]"
                       }
                     },
                     "template": {
                       "$schema": "http://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json",
                       "contentVersion": "1.0.0.0",
-                      "outputs": {},
                       "parameters": {
-                        "ddosRegion": {
+                        "rgName": {
                           "type": "string"
                         },
                         "ddosname": {
                           "type": "string"
                         },
-                        "rgName": {
+                        "ddosRegion": {
                           "type": "string"
                         }
                       },
                       "resources": [
                         {
+                          "type": "Microsoft.Resources/resourceGroups",
                           "apiVersion": "2018-05-01",
-                          "location": "[deployment().location]",
                           "name": "[parameters('rgName')]",
-                          "properties": {},
-                          "type": "Microsoft.Resources/resourceGroups"
+                          "location": "[deployment().location]",
+                          "properties": {}
                         },
                         {
+                          "type": "Microsoft.Resources/deployments",
                           "apiVersion": "2018-05-01",
+                          "name": "ddosprotection",
+                          "resourceGroup": "[parameters('rgName')]",
                           "dependsOn": [
                             "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
                           ],
-                          "name": "ddosprotection",
                           "properties": {
                             "mode": "Incremental",
                             "template": {
                               "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
                               "contentVersion": "1.0.0.0",
-                              "outputs": {},
                               "parameters": {},
                               "resources": [
                                 {
+                                  "type": "Microsoft.Network/ddosProtectionPlans",
                                   "apiVersion": "2019-12-01",
-                                  "location": "[parameters('ddosRegion')]",
                                   "name": "[parameters('ddosName')]",
-                                  "properties": {},
-                                  "type": "Microsoft.Network/ddosProtectionPlans"
+                                  "location": "[parameters('ddosRegion')]",
+                                  "properties": {}
                                 }
-                              ]
+                              ],
+                              "outputs": {}
                             }
-                          },
-                          "resourceGroup": "[parameters('rgName')]",
-                          "type": "Microsoft.Resources/deployments"
+                          }
                         }
-                      ]
+                      ],
+                      "outputs": {}
                     }
                   }
-                },
-                "deploymentScope": "Subscription",
-                "existenceScope": "ResourceGroup",
-                "name": "[parameters('ddosName')]",
-                "resourceGroupName": "[parameters('rgName')]",
-                "roleDefinitionIds": [
-                  "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
-                ],
-                "type": "Microsoft.Network/ddosProtectionPlans"
-              },
-              "effect": "deployIfNotExists"
+                }
+              }
             }
           }
         }

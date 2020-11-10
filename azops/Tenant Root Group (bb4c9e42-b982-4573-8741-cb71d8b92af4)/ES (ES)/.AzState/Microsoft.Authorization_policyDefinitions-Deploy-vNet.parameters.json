@@ -18,7 +18,8 @@
             "ipam": {
               "type": "Array",
               "metadata": {
-                "displayName": "ipam"
+                "displayName": "ipam",
+                "description": null
               },
               "defaultValue": []
             }
@@ -27,47 +28,60 @@
             "if": {
               "allOf": [
                 {
-                  "equals": "Microsoft.Resources/subscriptions",
-                  "field": "type"
+                  "field": "type",
+                  "equals": "Microsoft.Resources/subscriptions"
                 }
               ]
             },
             "then": {
+              "effect": "deployIfNotExists",
               "details": {
+                "type": "Microsoft.Resources/resourceGroups",
+                "deploymentScope": "Subscription",
+                "existenceScope": "Subscription",
+                "roleDefinitionIds": [
+                  "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+                ],
+                "existenceCondition": {
+                  "allOf": [
+                    {
+                      "field": "type",
+                      "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+                    },
+                    {
+                      "field": "name",
+                      "like": "[concat(subscription().displayName, '-network')]"
+                    }
+                  ]
+                },
                 "deployment": {
                   "location": "northeurope",
                   "properties": {
                     "mode": "incremental",
                     "parameters": {
                       "ipam": {
-                        "defaultValue": [],
-                        "value": "[parameters('ipam')]"
+                        "value": "[parameters('ipam')]",
+                        "defaultValue": []
                       }
                     },
                     "template": {
                       "$schema": "http://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json",
                       "contentVersion": "1.0.0.0",
-                      "outputs": {
-                        "ipam": {
-                          "condition": "[bool('true')]",
-                          "type": "Int",
-                          "value": "[length(parameters('ipam'))]"
-                        }
-                      },
                       "parameters": {
                         "ipam": {
                           "defaultValue": [
                             {
-                              "hubVirtualNetworkConnection": {
-                                "properties": {
-                                  "allowHubToRemoteVnetTransit": true,
-                                  "allowRemoteVnetToUseHubVnetGateways": false,
-                                  "enableInternetSecurity": true
-                                },
-                                "vWanVhubResourceId": "/subscriptions/99c2838f-a548-4884-a6e2-38c1f8fb4c0b/resourceGroups/contoso-global-vwan/providers/Microsoft.Network/virtualHubs/contoso-vhub-weu"
-                              },
-                              "location": "westeurope",
                               "name": "bu1-weu-msx3-vNet1",
+                              "location": "westeurope",
+                              "virtualNetworks": {
+                                "properties": {
+                                  "addressSpace": {
+                                    "addressPrefixes": [
+                                      "10.51.217.0/24"
+                                    ]
+                                  }
+                                }
+                              },
                               "networkSecurityGroups": {
                                 "properties": {
                                   "securityRules": []
@@ -78,13 +92,12 @@
                                   "routes": []
                                 }
                               },
-                              "virtualNetworks": {
+                              "hubVirtualNetworkConnection": {
+                                "vWanVhubResourceId": "/subscriptions/99c2838f-a548-4884-a6e2-38c1f8fb4c0b/resourceGroups/contoso-global-vwan/providers/Microsoft.Network/virtualHubs/contoso-vhub-weu",
                                 "properties": {
-                                  "addressSpace": {
-                                    "addressPrefixes": [
-                                      "10.51.217.0/24"
-                                    ]
-                                  }
+                                  "allowHubToRemoteVnetTransit": true,
+                                  "allowRemoteVnetToUseHubVnetGateways": false,
+                                  "enableInternetSecurity": true
                                 }
                               }
                             }
@@ -92,136 +105,129 @@
                           "type": "Array"
                         }
                       },
+                      "variables": {
+                        "vNetRgName": "[concat(subscription().displayName, '-network')]",
+                        "vNetName": "[concat(subscription().displayName, '-vNet')]",
+                        "vNetSubId": "[subscription().subscriptionId]"
+                      },
                       "resources": [
                         {
+                          "type": "Microsoft.Resources/deployments",
                           "apiVersion": "2020-06-01",
-                          "condition": "[if(and(not(empty(parameters('ipam'))), equals(toLower(parameters('ipam')[copyIndex()].name),toLower(variables('vNetName')))),bool('true'),bool('false'))]",
-                          "copy": {
-                            "count": "[length(parameters('ipam'))]",
-                            "name": "ipam-rg-loop"
-                          },
-                          "dependsOn": [],
-                          "location": "[parameters('ipam')[copyIndex()].location]",
                           "name": "[concat('es-ipam-',subscription().displayName,'-RG-',copyIndex())]",
+                          "location": "[parameters('ipam')[copyIndex()].location]",
+                          "dependsOn": [],
                           "properties": {
                             "mode": "Incremental",
                             "template": {
                               "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
                               "contentVersion": "1.0.0.0",
-                              "outputs": {},
                               "parameters": {},
+                              "variables": {},
                               "resources": [
                                 {
+                                  "type": "Microsoft.Resources/resourceGroups",
                                   "apiVersion": "2020-06-01",
-                                  "location": "[parameters('ipam')[copyIndex()].location]",
                                   "name": "[variables('vNetRgName')]",
-                                  "properties": {},
-                                  "type": "Microsoft.Resources/resourceGroups"
+                                  "location": "[parameters('ipam')[copyIndex()].location]",
+                                  "properties": {}
                                 },
                                 {
+                                  "type": "Microsoft.Resources/resourceGroups",
                                   "apiVersion": "2020-06-01",
-                                  "location": "[parameters('ipam')[copyIndex()].location]",
                                   "name": "NetworkWatcherRG",
-                                  "properties": {},
-                                  "type": "Microsoft.Resources/resourceGroups"
+                                  "location": "[parameters('ipam')[copyIndex()].location]",
+                                  "properties": {}
                                 }
                               ],
-                              "variables": {}
+                              "outputs": {}
                             }
                           },
-                          "type": "Microsoft.Resources/deployments"
+                          "copy": {
+                            "name": "ipam-rg-loop",
+                            "count": "[length(parameters('ipam'))]"
+                          },
+                          "condition": "[if(and(not(empty(parameters('ipam'))), equals(toLower(parameters('ipam')[copyIndex()].name),toLower(variables('vNetName')))),bool('true'),bool('false'))]"
                         },
                         {
+                          "type": "Microsoft.Resources/deployments",
                           "apiVersion": "2020-06-01",
-                          "condition": "[if(and(not(empty(parameters('ipam'))), equals(toLower(parameters('ipam')[copyIndex()].name),toLower(variables('vNetName')))),bool('true'),bool('false'))]",
-                          "copy": {
-                            "count": "[length(parameters('ipam'))]",
-                            "name": "ipam-loop"
-                          },
+                          "name": "[concat('es-ipam-',subscription().displayName,'-nsg-udr-vnet-hub-vwan-peering-',copyIndex())]",
                           "dependsOn": [
                             "[concat('es-ipam-',subscription().displayName,'-RG-',copyIndex())]"
                           ],
-                          "name": "[concat('es-ipam-',subscription().displayName,'-nsg-udr-vnet-hub-vwan-peering-',copyIndex())]",
                           "properties": {
                             "mode": "Incremental",
                             "template": {
                               "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
                               "contentVersion": "1.0.0.0",
-                              "outputs": {},
                               "parameters": {},
+                              "variables": {},
                               "resources": [
                                 {
-                                  "apiVersion": "2020-05-01",
                                   "condition": "[contains(parameters('ipam')[copyIndex()],'networkSecurityGroups')]",
-                                  "location": "[parameters('ipam')[copyIndex()].location]",
+                                  "apiVersion": "2020-05-01",
+                                  "type": "Microsoft.Network/networkSecurityGroups",
                                   "name": "[concat(subscription().displayName, '-nsg')]",
-                                  "properties": "[if(contains(parameters('ipam')[copyIndex()],'networkSecurityGroups'),parameters('ipam')[copyIndex()].networkSecurityGroups.properties,json('null'))]",
-                                  "type": "Microsoft.Network/networkSecurityGroups"
-                                },
-                                {
-                                  "apiVersion": "2020-05-01",
-                                  "condition": "[contains(parameters('ipam')[copyIndex()],'routeTables')]",
                                   "location": "[parameters('ipam')[copyIndex()].location]",
-                                  "name": "[concat(subscription().displayName, '-udr')]",
-                                  "properties": "[if(contains(parameters('ipam')[copyIndex()],'routeTables'),parameters('ipam')[copyIndex()].routeTables.properties,json('null'))]",
-                                  "type": "Microsoft.Network/routeTables"
+                                  "properties": "[if(contains(parameters('ipam')[copyIndex()],'networkSecurityGroups'),parameters('ipam')[copyIndex()].networkSecurityGroups.properties,json('null'))]"
                                 },
                                 {
+                                  "condition": "[contains(parameters('ipam')[copyIndex()],'routeTables')]",
                                   "apiVersion": "2020-05-01",
+                                  "type": "Microsoft.Network/routeTables",
+                                  "name": "[concat(subscription().displayName, '-udr')]",
+                                  "location": "[parameters('ipam')[copyIndex()].location]",
+                                  "properties": "[if(contains(parameters('ipam')[copyIndex()],'routeTables'),parameters('ipam')[copyIndex()].routeTables.properties,json('null'))]"
+                                },
+                                {
                                   "condition": "[contains(parameters('ipam')[copyIndex()],'virtualNetworks')]",
+                                  "type": "Microsoft.Network/virtualNetworks",
+                                  "apiVersion": "2020-05-01",
+                                  "name": "[concat(subscription().displayName, '-vnet')]",
+                                  "location": "[parameters('ipam')[copyIndex()].location]",
                                   "dependsOn": [
                                     "[concat(subscription().displayName, '-nsg')]",
                                     "[concat(subscription().displayName, '-udr')]"
                                   ],
-                                  "location": "[parameters('ipam')[copyIndex()].location]",
-                                  "name": "[concat(subscription().displayName, '-vnet')]",
-                                  "properties": "[if(contains(parameters('ipam')[copyIndex()],'virtualNetworks'),parameters('ipam')[copyIndex()].virtualNetworks.properties,json('null'))]",
-                                  "type": "Microsoft.Network/virtualNetworks"
+                                  "properties": "[if(contains(parameters('ipam')[copyIndex()],'virtualNetworks'),parameters('ipam')[copyIndex()].virtualNetworks.properties,json('null'))]"
                                 },
                                 {
-                                  "apiVersion": "2020-05-01",
                                   "condition": "[contains(parameters('ipam')[copyIndex()],'virtualNetworkPeerings')]",
+                                  "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+                                  "apiVersion": "2020-05-01",
+                                  "name": "[concat(variables('vNetName'), '/peerToHub')]",
                                   "dependsOn": [
                                     "[concat(subscription().displayName, '-vnet')]"
                                   ],
-                                  "name": "[concat(variables('vNetName'), '/peerToHub')]",
-                                  "properties": "[if(contains(parameters('ipam')[copyIndex()],'virtualNetworkPeerings'),parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties,json('null'))]",
-                                  "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings"
+                                  "properties": "[if(contains(parameters('ipam')[copyIndex()],'virtualNetworkPeerings'),parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties,json('null'))]"
                                 },
                                 {
-                                  "apiVersion": "2020-06-01",
                                   "condition": "[and(contains(parameters('ipam')[copyIndex()],'virtualNetworks'),contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId'))]",
+                                  "type": "Microsoft.Resources/deployments",
+                                  "apiVersion": "2020-06-01",
+                                  "name": "[concat('es-ipam-vWan-',subscription().displayName,'-peering-',copyIndex())]",
+                                  "subscriptionId": "[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),split(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.vWanVhubResourceId,'/')[2],json('null'))]",
+                                  "resourceGroup": "[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),split(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.vWanVhubResourceId,'/')[4],json('null'))]",
                                   "dependsOn": [
                                     "[concat(subscription().displayName, '-vnet')]"
                                   ],
-                                  "name": "[concat('es-ipam-vWan-',subscription().displayName,'-peering-',copyIndex())]",
                                   "properties": {
+                                    "mode": "Incremental",
                                     "expressionEvaluationOptions": {
                                       "scope": "inner"
-                                    },
-                                    "mode": "Incremental",
-                                    "parameters": {
-                                      "allowHubToRemoteVnetTransit": {
-                                        "value": "[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.properties.allowHubToRemoteVnetTransit,json('null'))]"
-                                      },
-                                      "allowRemoteVnetToUseHubVnetGateways": {
-                                        "value": "[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.properties.allowRemoteVnetToUseHubVnetGateways,json('null'))]"
-                                      },
-                                      "enableInternetSecurity": {
-                                        "value": "[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.properties.enableInternetSecurity,json('null'))]"
-                                      },
-                                      "remoteVirtualNetwork": {
-                                        "value": "[concat(subscription().id,'/resourceGroups/',variables('vNetRgName'), '/providers/','Microsoft.Network/virtualNetworks/', concat(subscription().displayName, '-vnet'))]"
-                                      },
-                                      "vWanVhubName": {
-                                        "value": "[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),split(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.vWanVhubResourceId,'/')[8],json('null'))]"
-                                      }
                                     },
                                     "template": {
                                       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
                                       "contentVersion": "1.0.0.0",
-                                      "outputs": {},
                                       "parameters": {
+                                        "remoteVirtualNetwork": {
+                                          "type": "string"
+                                        },
+                                        "vWanVhubName": {
+                                          "Type": "string",
+                                          "defaultValue": ""
+                                        },
                                         "allowHubToRemoteVnetTransit": {
                                           "Type": "bool",
                                           "defaultValue": true
@@ -233,130 +239,125 @@
                                         "enableInternetSecurity": {
                                           "Type": "bool",
                                           "defaultValue": true
-                                        },
-                                        "remoteVirtualNetwork": {
-                                          "type": "string"
-                                        },
-                                        "vWanVhubName": {
-                                          "Type": "string",
-                                          "defaultValue": ""
                                         }
                                       },
+                                      "variables": {},
                                       "resources": [
                                         {
+                                          "type": "Microsoft.Network/virtualHubs/hubVirtualNetworkConnections",
                                           "apiVersion": "2020-05-01",
-                                          "name": "[[concat(parameters('vWanVhubName'),'/',last(split(parameters('remoteVirtualNetwork'),'/')))]",
+                                          "name": "[concat(parameters('vWanVhubName'),'/',last(split(parameters('remoteVirtualNetwork'),'/')))]",
                                           "properties": {
-                                            "allowHubToRemoteVnetTransit": "[[parameters('allowHubToRemoteVnetTransit')]",
-                                            "allowRemoteVnetToUseHubVnetGateways": "[[parameters('allowRemoteVnetToUseHubVnetGateways')]",
-                                            "enableInternetSecurity": "[[parameters('enableInternetSecurity')]",
                                             "remoteVirtualNetwork": {
-                                              "id": "[[parameters('remoteVirtualNetwork')]"
-                                            }
-                                          },
-                                          "type": "Microsoft.Network/virtualHubs/hubVirtualNetworkConnections"
+                                              "id": "[parameters('remoteVirtualNetwork')]"
+                                            },
+                                            "allowHubToRemoteVnetTransit": "[parameters('allowHubToRemoteVnetTransit')]",
+                                            "allowRemoteVnetToUseHubVnetGateways": "[parameters('allowRemoteVnetToUseHubVnetGateways')]",
+                                            "enableInternetSecurity": "[parameters('enableInternetSecurity')]"
+                                          }
                                         }
                                       ],
-                                      "variables": {}
+                                      "outputs": {}
+                                    },
+                                    "parameters": {
+                                      "remoteVirtualNetwork": {
+                                        "value": "[concat(subscription().id,'/resourceGroups/',variables('vNetRgName'), '/providers/','Microsoft.Network/virtualNetworks/', concat(subscription().displayName, '-vnet'))]"
+                                      },
+                                      "vWanVhubName": {
+                                        "value": "[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),split(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.vWanVhubResourceId,'/')[8],json('null'))]"
+                                      },
+                                      "allowHubToRemoteVnetTransit": {
+                                        "value": "[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.properties.allowHubToRemoteVnetTransit,json('null'))]"
+                                      },
+                                      "allowRemoteVnetToUseHubVnetGateways": {
+                                        "value": "[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.properties.allowRemoteVnetToUseHubVnetGateways,json('null'))]"
+                                      },
+                                      "enableInternetSecurity": {
+                                        "value": "[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.properties.enableInternetSecurity,json('null'))]"
+                                      }
                                     }
-                                  },
-                                  "resourceGroup": "[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),split(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.vWanVhubResourceId,'/')[4],json('null'))]",
-                                  "subscriptionId": "[if(and(contains(parameters('ipam')[copyIndex()],'hubVirtualNetworkConnection'),contains(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection,'vWanVhubResourceId')),split(parameters('ipam')[copyIndex()].hubVirtualNetworkConnection.vWanVhubResourceId,'/')[2],json('null'))]",
-                                  "type": "Microsoft.Resources/deployments"
+                                  }
                                 },
                                 {
-                                  "apiVersion": "2020-06-01",
                                   "condition": "[and(contains(parameters('ipam')[copyIndex()],'virtualNetworks'),contains(parameters('ipam')[copyIndex()],'virtualNetworkPeerings'),contains(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork,'id'))]",
+                                  "type": "Microsoft.Resources/deployments",
+                                  "apiVersion": "2020-06-01",
+                                  "name": "[concat('es-ipam-hub-',subscription().displayName,'-peering-',copyIndex())]",
+                                  "subscriptionId": "[if(and(contains(parameters('ipam')[copyIndex()],'virtualNetworkPeerings'),contains(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork,'id')),split(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork.id,'/')[2],json('null'))]",
+                                  "resourceGroup": "[if(and(contains(parameters('ipam')[copyIndex()],'virtualNetworkPeerings'),contains(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork,'id')),split(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork.id,'/')[4],json('null'))]",
                                   "dependsOn": [
                                     "[concat(subscription().displayName, '-vnet')]"
                                   ],
-                                  "name": "[concat('es-ipam-hub-',subscription().displayName,'-peering-',copyIndex())]",
                                   "properties": {
+                                    "mode": "Incremental",
                                     "expressionEvaluationOptions": {
                                       "scope": "inner"
-                                    },
-                                    "mode": "Incremental",
-                                    "parameters": {
-                                      "hubName": {
-                                        "value": "[if(and(contains(parameters('ipam')[copyIndex()],'virtualNetworkPeerings'),contains(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork,'id')),split(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork.id,'/')[8],json('null'))]"
-                                      },
-                                      "remoteVirtualNetwork": {
-                                        "value": "[concat(subscription().id,'/resourceGroups/',variables('vNetRgName'), '/providers/','Microsoft.Network/virtualNetworks/', concat(subscription().displayName, '-vnet'))]"
-                                      }
                                     },
                                     "template": {
                                       "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
                                       "contentVersion": "1.0.0.0",
-                                      "outputs": {},
                                       "parameters": {
-                                        "hubName": {
+                                        "remoteVirtualNetwork": {
                                           "Type": "string",
                                           "defaultValue": false
                                         },
-                                        "remoteVirtualNetwork": {
+                                        "hubName": {
                                           "Type": "string",
                                           "defaultValue": false
                                         }
                                       },
+                                      "variables": {},
                                       "resources": [
                                         {
+                                          "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
+                                          "name": "[concat(parameters('hubName'),'/',last(split(parameters('remoteVirtualNetwork'),'/')))]",
                                           "apiVersion": "2020-05-01",
-                                          "name": "[[concat(parameters('hubName'),'/',last(split(parameters('remoteVirtualNetwork'),'/')))]",
                                           "properties": {
+                                            "allowVirtualNetworkAccess": true,
                                             "allowForwardedTraffic": true,
                                             "allowGatewayTransit": true,
-                                            "allowVirtualNetworkAccess": true,
+                                            "useRemoteGateways": false,
                                             "remoteVirtualNetwork": {
-                                              "id": "[[parameters('remoteVirtualNetwork')]"
-                                            },
-                                            "useRemoteGateways": false
-                                          },
-                                          "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings"
+                                              "id": "[parameters('remoteVirtualNetwork')]"
+                                            }
+                                          }
                                         }
                                       ],
-                                      "variables": {}
+                                      "outputs": {}
+                                    },
+                                    "parameters": {
+                                      "remoteVirtualNetwork": {
+                                        "value": "[concat(subscription().id,'/resourceGroups/',variables('vNetRgName'), '/providers/','Microsoft.Network/virtualNetworks/', concat(subscription().displayName, '-vnet'))]"
+                                      },
+                                      "hubName": {
+                                        "value": "[if(and(contains(parameters('ipam')[copyIndex()],'virtualNetworkPeerings'),contains(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork,'id')),split(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork.id,'/')[8],json('null'))]"
+                                      }
                                     }
-                                  },
-                                  "resourceGroup": "[if(and(contains(parameters('ipam')[copyIndex()],'virtualNetworkPeerings'),contains(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork,'id')),split(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork.id,'/')[4],json('null'))]",
-                                  "subscriptionId": "[if(and(contains(parameters('ipam')[copyIndex()],'virtualNetworkPeerings'),contains(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork,'id')),split(parameters('ipam')[copyIndex()].virtualNetworkPeerings.properties.remoteVirtualNetwork.id,'/')[2],json('null'))]",
-                                  "type": "Microsoft.Resources/deployments"
+                                  }
                                 }
                               ],
-                              "variables": {}
+                              "outputs": {}
                             }
                           },
                           "resourceGroup": "[variables('vNetRgName')]",
-                          "type": "Microsoft.Resources/deployments"
+                          "copy": {
+                            "name": "ipam-loop",
+                            "count": "[length(parameters('ipam'))]"
+                          },
+                          "condition": "[if(and(not(empty(parameters('ipam'))), equals(toLower(parameters('ipam')[copyIndex()].name),toLower(variables('vNetName')))),bool('true'),bool('false'))]"
                         }
                       ],
-                      "variables": {
-                        "vNetName": "[concat(subscription().displayName, '-vNet')]",
-                        "vNetRgName": "[concat(subscription().displayName, '-network')]",
-                        "vNetSubId": "[subscription().subscriptionId]"
+                      "outputs": {
+                        "ipam": {
+                          "condition": "[bool('true')]",
+                          "type": "Int",
+                          "value": "[length(parameters('ipam'))]"
+                        }
                       }
                     }
                   }
-                },
-                "deploymentScope": "Subscription",
-                "existenceCondition": {
-                  "allOf": [
-                    {
-                      "equals": "Microsoft.Resources/subscriptions/resourceGroups",
-                      "field": "type"
-                    },
-                    {
-                      "field": "name",
-                      "like": "[concat(subscription().displayName, '-network')]"
-                    }
-                  ]
-                },
-                "existenceScope": "Subscription",
-                "roleDefinitionIds": [
-                  "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
-                ],
-                "type": "Microsoft.Resources/resourceGroups"
-              },
-              "effect": "deployIfNotExists"
+                }
+              }
             }
           }
         }

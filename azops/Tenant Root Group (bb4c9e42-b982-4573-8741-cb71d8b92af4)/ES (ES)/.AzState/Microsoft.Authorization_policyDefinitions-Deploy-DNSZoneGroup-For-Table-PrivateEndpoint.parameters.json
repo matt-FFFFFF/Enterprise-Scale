@@ -13,7 +13,7 @@
         "Properties": {
           "Description": "This policy deploys a DNS Zone Group for Storage-Blob Private Endpoint",
           "DisplayName": "Deploy-DNSZoneGroup-For-Table-PrivateEndpoint",
-          "Mode": "Indexed",
+          "Mode": "All",
           "Parameters": {
             "privateDnsZoneId": {
               "type": "String",
@@ -27,15 +27,15 @@
             "if": {
               "allOf": [
                 {
-                  "equals": "Microsoft.Network/privateEndpoints",
-                  "field": "type"
+                  "field": "type",
+                  "equals": "Microsoft.Network/privateEndpoints"
                 },
                 {
                   "count": {
                     "field": "Microsoft.Network/privateEndpoints/privateLinkServiceConnections[*].groupIds[*]",
                     "where": {
-                      "equals": "table",
-                      "field": "Microsoft.Network/privateEndpoints/privateLinkServiceConnections[*].groupIds[*]"
+                      "field": "Microsoft.Network/privateEndpoints/privateLinkServiceConnections[*].groupIds[*]",
+                      "equals": "table"
                     }
                   },
                   "greaterOrEquals": 1
@@ -43,40 +43,35 @@
               ]
             },
             "then": {
+              "effect": "deployIfNotExists",
               "details": {
+                "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
+                "roleDefinitionIds": [
+                  "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                ],
                 "deployment": {
                   "properties": {
                     "mode": "incremental",
-                    "parameters": {
-                      "location": {
-                        "value": "[field('location')]"
-                      },
-                      "privateDnsZoneId": {
-                        "value": "[parameters('privateDnsZoneId')]"
-                      },
-                      "privateEndpointName": {
-                        "value": "[field('name')]"
-                      }
-                    },
                     "template": {
                       "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
                       "contentVersion": "1.0.0.0",
                       "parameters": {
-                        "location": {
-                          "type": "string"
-                        },
                         "privateDnsZoneId": {
                           "type": "string"
                         },
                         "privateEndpointName": {
                           "type": "string"
+                        },
+                        "location": {
+                          "type": "string"
                         }
                       },
                       "resources": [
                         {
+                          "name": "[concat(parameters('privateEndpointName'), '/deployedByPolicy')]",
+                          "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups",
                           "apiVersion": "2020-03-01",
                           "location": "[parameters('location')]",
-                          "name": "[concat(parameters('privateEndpointName'), '/deployedByPolicy')]",
                           "properties": {
                             "privateDnsZoneConfigs": [
                               {
@@ -86,19 +81,24 @@
                                 }
                               }
                             ]
-                          },
-                          "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups"
+                          }
                         }
                       ]
+                    },
+                    "parameters": {
+                      "privateDnsZoneId": {
+                        "value": "[parameters('privateDnsZoneId')]"
+                      },
+                      "privateEndpointName": {
+                        "value": "[field('name')]"
+                      },
+                      "location": {
+                        "value": "[field('location')]"
+                      }
                     }
                   }
-                },
-                "roleDefinitionIds": [
-                  "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
-                ],
-                "type": "Microsoft.Network/privateEndpoints/privateDnsZoneGroups"
-              },
-              "effect": "deployIfNotExists"
+                }
+              }
             }
           }
         }

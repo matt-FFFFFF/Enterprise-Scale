@@ -19,8 +19,8 @@
             "if": {
               "allOf": [
                 {
-                  "equals": "Microsoft.ContainerService/managedClusters",
-                  "field": "type"
+                  "field": "type",
+                  "equals": "Microsoft.ContainerService/managedClusters"
                 },
                 {
                   "field": "Microsoft.ContainerService/managedClusters/apiServerAccessProfile.enablePrivateCluster",

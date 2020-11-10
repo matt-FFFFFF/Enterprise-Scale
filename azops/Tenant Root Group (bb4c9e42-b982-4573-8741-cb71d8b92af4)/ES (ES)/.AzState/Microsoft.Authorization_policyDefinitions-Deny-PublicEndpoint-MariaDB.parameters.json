@@ -19,8 +19,8 @@
             "if": {
               "allOf": [
                 {
-                  "equals": "Microsoft.DBforMariaDB/servers",
-                  "field": "type"
+                  "field": "type",
+                  "equals": "Microsoft.DBforMariaDB/servers"
                 },
                 {
                   "field": "Microsoft.DBforMariaDB/servers/publicNetworkAccess",
