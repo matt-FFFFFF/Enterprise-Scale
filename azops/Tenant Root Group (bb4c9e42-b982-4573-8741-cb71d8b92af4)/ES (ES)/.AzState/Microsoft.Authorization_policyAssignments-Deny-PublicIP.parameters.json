@@ -4,6 +4,7 @@
   "parameters": {
     "input": {
       "value": {
+        "Identity": null,
         "Location": "uksouth",
         "Name": "Deny-PublicIP",
         "PolicyAssignmentId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyAssignments/Deny-PublicIP",
@@ -17,7 +18,11 @@
         },
         "ResourceId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyAssignments/Deny-PublicIP",
         "ResourceName": "Deny-PublicIP",
-        "ResourceType": "Microsoft.Authorization/policyAssignments"
+        "ResourceType": "Microsoft.Authorization/policyAssignments",
+        "Sku": {
+          "name": "A0",
+          "tier": "Free"
+        }
       }
     }
   }
