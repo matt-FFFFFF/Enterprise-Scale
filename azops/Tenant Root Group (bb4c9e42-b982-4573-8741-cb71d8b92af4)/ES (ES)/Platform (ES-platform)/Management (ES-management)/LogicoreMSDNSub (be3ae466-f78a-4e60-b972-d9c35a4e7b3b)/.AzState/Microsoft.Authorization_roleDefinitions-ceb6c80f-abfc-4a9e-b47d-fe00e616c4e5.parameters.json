@@ -1,0 +1,36 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Id": "/subscriptions/be3ae466-f78a-4e60-b972-d9c35a4e7b3b/providers/Microsoft.Authorization/roleDefinitions/ceb6c80f-abfc-4a9e-b47d-fe00e616c4e5",
+        "Name": "ceb6c80f-abfc-4a9e-b47d-fe00e616c4e5",
+        "properties": {
+          "assignableScopes": [
+            "/subscriptions/be3ae466-f78a-4e60-b972-d9c35a4e7b3b"
+          ],
+          "description": "",
+          "permissions": [
+            {
+              "actions": [
+                "*"
+              ],
+              "dataActions": [],
+              "notActions": [
+                "Microsoft.Authorization/*/write",
+                "Microsoft.Network/vpnGateways/*",
+                "Microsoft.Network/expressRouteCircuits/*",
+                "Microsoft.Network/routeTables/write",
+                "Microsoft.Network/vpnsites/*"
+              ],
+              "notdataActions": []
+            }
+          ],
+          "roleName": "Owner modified"
+        },
+        "ResourceType": "Microsoft.Authorization/roleDefinitions"
+      }
+    }
+  }
+}
