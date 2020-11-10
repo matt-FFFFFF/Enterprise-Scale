@@ -1,0 +1,144 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Name": "Deploy-Diagnostics-VNetGW",
+        "ResourceId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VNetGW",
+        "ResourceName": "Deploy-Diagnostics-VNetGW",
+        "ResourceType": "Microsoft.Authorization/policyDefinitions",
+        "SubscriptionId": null,
+        "PolicyDefinitionId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VNetGW",
+        "Properties": {
+          "Description": "Apply diagnostic settings for Virtual Network Gateways - Log Analytics",
+          "DisplayName": "Deploy-Diagnostics-VNetGW",
+          "Mode": "All",
+          "Parameters": {
+            "logAnalytics": {
+              "type": "String",
+              "metadata": {
+                "description": "Select the Log Analytics workspace from dropdown list",
+                "displayName": "Log Analytics workspace",
+                "strongType": "omsWorkspace"
+              }
+            }
+          },
+          "PolicyRule": {
+            "if": {
+              "equals": "Microsoft.Network/virtualNetworkGateways",
+              "field": "type"
+            },
+            "then": {
+              "details": {
+                "deployment": {
+                  "properties": {
+                    "mode": "incremental",
+                    "parameters": {
+                      "location": {
+                        "value": "[field('location')]"
+                      },
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      },
+                      "resourceName": {
+                        "value": "[field('name')]"
+                      }
+                    },
+                    "template": {
+                      "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                      "contentVersion": "1.0.0.0",
+                      "outputs": {},
+                      "parameters": {
+                        "location": {
+                          "type": "string"
+                        },
+                        "logAnalytics": {
+                          "type": "string"
+                        },
+                        "resourceName": {
+                          "type": "string"
+                        }
+                      },
+                      "resources": [
+                        {
+                          "apiVersion": "2017-05-01-preview",
+                          "dependsOn": [],
+                          "location": "[parameters('location')]",
+                          "name": "[concat(parameters('resourceName'), '/', 'Microsoft.Insights/setByPolicy')]",
+                          "properties": {
+                            "logs": [
+                              {
+                                "category": "GatewayDiagnosticLog",
+                                "enabled": true
+                              },
+                              {
+                                "category": "IKEDiagnosticLog",
+                                "enabled": true
+                              },
+                              {
+                                "category": "P2SDiagnosticLog",
+                                "enabled": true
+                              },
+                              {
+                                "category": "RouteDiagnosticLog",
+                                "enabled": true
+                              },
+                              {
+                                "category": "RouteDiagnosticLog",
+                                "enabled": true
+                              },
+                              {
+                                "category": "TunnelDiagnosticLog",
+                                "enabled": true
+                              }
+                            ],
+                            "metrics": [
+                              {
+                                "category": "AllMetrics",
+                                "enabled": true,
+                                "retentionPolicy": {
+                                  "days": 0,
+                                  "enabled": false
+                                }
+                              }
+                            ],
+                            "workspaceId": "[parameters('logAnalytics')]"
+                          },
+                          "type": "Microsoft.Network/virtualNetworkGateways/providers/diagnosticSettings"
+                        }
+                      ],
+                      "variables": {}
+                    }
+                  }
+                },
+                "existenceCondition": {
+                  "allOf": [
+                    {
+                      "equals": "true",
+                      "field": "Microsoft.Insights/diagnosticSettings/logs.enabled"
+                    },
+                    {
+                      "equals": "true",
+                      "field": "Microsoft.Insights/diagnosticSettings/metrics.enabled"
+                    },
+                    {
+                      "equals": "[parameters('logAnalytics')]",
+                      "field": "Microsoft.Insights/diagnosticSettings/workspaceId"
+                    }
+                  ]
+                },
+                "name": "setByPolicy",
+                "roleDefinitionIds": [
+                  "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c"
+                ],
+                "type": "Microsoft.Insights/diagnosticSettings"
+              },
+              "effect": "deployIfNotExists"
+            }
+          }
+        }
+      }
+    }
+  }
+}

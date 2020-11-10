@@ -1,0 +1,404 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Name": "Deploy-LA-Config",
+        "ResourceId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-LA-Config",
+        "ResourceName": "Deploy-LA-Config",
+        "ResourceType": "Microsoft.Authorization/policyDefinitions",
+        "SubscriptionId": null,
+        "PolicyDefinitionId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-LA-Config",
+        "Properties": {
+          "Description": "null",
+          "DisplayName": "Deploy-LA-Config",
+          "Mode": "All",
+          "Parameters": {
+            "workspaceName": {
+              "type": "String",
+              "metadata": {
+                "description": "Provide name of existing Log Analytics workspace",
+                "displayName": "workspaceName"
+              }
+            },
+            "workspaceRegion": {
+              "type": "String",
+              "metadata": {
+                "description": "Select region of existing Log Analytics workspace",
+                "displayName": "workspaceRegion"
+              }
+            }
+          },
+          "PolicyRule": {
+            "if": {
+              "allOf": [
+                {
+                  "equals": "Microsoft.OperationalInsights/workspaces",
+                  "field": "type"
+                }
+              ]
+            },
+            "then": {
+              "details": {
+                "deployment": {
+                  "properties": {
+                    "mode": "incremental",
+                    "parameters": {
+                      "workspaceName": {
+                        "value": "[parameters('workspaceName')]"
+                      },
+                      "workspaceRegion": {
+                        "value": "[parameters('workspaceRegion')]"
+                      }
+                    },
+                    "template": {
+                      "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                      "contentVersion": "1.0.0.0",
+                      "outputs": {},
+                      "parameters": {
+                        "workspaceName": {
+                          "type": "string"
+                        },
+                        "workspaceRegion": {
+                          "type": "string"
+                        }
+                      },
+                      "resources": [
+                        {
+                          "apiVersion": "2015-11-01-preview",
+                          "kind": "LinuxPerformanceCollection",
+                          "name": "[concat(parameters('workspaceName'), '/LinuxPerfCollection')]",
+                          "properties": {
+                            "state": "Enabled"
+                          },
+                          "type": "Microsoft.OperationalInsights/workspaces/datasources"
+                        },
+                        {
+                          "apiVersion": "2015-11-01-preview",
+                          "kind": "LinuxPerformanceObject",
+                          "name": "[concat(parameters('workspaceName'), '/', variables('vmInsightsPerfCounters').linuxDiskObject.armResourceName)]",
+                          "properties": {
+                            "instanceName": "[variables('vmInsightsPerfCounters').linuxDiskObject.instanceName]",
+                            "intervalSeconds": "[variables('vmInsightsPerfCounters').linuxDiskObject.intervalSeconds]",
+                            "objectName": "[variables('vmInsightsPerfCounters').linuxDiskObject.objectName]",
+                            "performanceCounters": "[variables('vmInsightsPerfCounters').linuxDiskArray]"
+                          },
+                          "type": "Microsoft.OperationalInsights/workspaces/dataSources"
+                        },
+                        {
+                          "apiVersion": "2015-11-01-preview",
+                          "kind": "LinuxPerformanceObject",
+                          "name": "[concat(parameters('workspaceName'), '/', variables('vmInsightsPerfCounters').linuxMemoryObject.armResourceName)]",
+                          "properties": {
+                            "instanceName": "[variables('vmInsightsPerfCounters').linuxMemoryObject.instanceName]",
+                            "intervalSeconds": "[variables('vmInsightsPerfCounters').linuxMemoryObject.intervalSeconds]",
+                            "objectName": "[variables('vmInsightsPerfCounters').linuxMemoryObject.objectName]",
+                            "performanceCounters": "[variables('vmInsightsPerfCounters').linuxMemoryArray]"
+                          },
+                          "type": "Microsoft.OperationalInsights/workspaces/dataSources"
+                        },
+                        {
+                          "apiVersion": "2015-11-01-preview",
+                          "kind": "LinuxPerformanceObject",
+                          "name": "[concat(parameters('workspaceName'), '/', variables('vmInsightsPerfCounters').linuxCpuObject.armResourceName)]",
+                          "properties": {
+                            "instanceName": "[variables('vmInsightsPerfCounters').linuxCpuObject.instanceName]",
+                            "intervalSeconds": "[variables('vmInsightsPerfCounters').linuxCpuObject.intervalSeconds]",
+                            "objectName": "[variables('vmInsightsPerfCounters').linuxCpuObject.objectName]",
+                            "performanceCounters": "[variables('vmInsightsPerfCounters').linuxCpuArray]"
+                          },
+                          "type": "Microsoft.OperationalInsights/workspaces/dataSources"
+                        },
+                        {
+                          "apiVersion": "2015-11-01-preview",
+                          "kind": "LinuxPerformanceObject",
+                          "name": "[concat(parameters('workspaceName'), '/', variables('vmInsightsPerfCounters').linuxNetworkObject.armResourceName)]",
+                          "properties": {
+                            "instanceName": "[variables('vmInsightsPerfCounters').linuxNetworkObject.instanceName]",
+                            "intervalSeconds": "[variables('vmInsightsPerfCounters').linuxNetworkObject.intervalSeconds]",
+                            "objectName": "[variables('vmInsightsPerfCounters').linuxNetworkObject.objectName]",
+                            "performanceCounters": "[variables('vmInsightsPerfCounters').linuxNetworkArray]"
+                          },
+                          "type": "Microsoft.OperationalInsights/workspaces/dataSources"
+                        },
+                        {
+                          "apiVersion": "2015-11-01-preview",
+                          "copy": {
+                            "count": "[length(variables('vmInsightsPerfCounters').windowsArray)]",
+                            "name": "counterCopy"
+                          },
+                          "kind": "WindowsPerformanceCounter",
+                          "name": "[concat(parameters('workspaceName'), '/', variables('vmInsightsPerfCounters').windowsArray[copyIndex()].armName)]",
+                          "properties": {
+                            "counterName": "[variables('vmInsightsPerfCounters').windowsArray[copyIndex()].counterName]",
+                            "instanceName": "[variables('vmInsightsPerfCounters').windowsArray[copyIndex()].instanceName]",
+                            "intervalSeconds": "[variables('vmInsightsPerfCounters').windowsArray[copyIndex()].intervalSeconds]",
+                            "objectName": "[variables('vmInsightsPerfCounters').windowsArray[copyIndex()].objectName]"
+                          },
+                          "type": "Microsoft.OperationalInsights/workspaces/dataSources"
+                        },
+                        {
+                          "apiVersion": "2015-11-01-preview",
+                          "copy": {
+                            "count": "[length(variables('batch1').solutions)]",
+                            "name": "solutionCopy"
+                          },
+                          "location": "[parameters('workspaceRegion')]",
+                          "name": "[concat(variables('batch1').solutions[copyIndex()].Name)]",
+                          "plan": {
+                            "name": "[variables('batch1').solutions[copyIndex()].name]",
+                            "product": "[concat('OMSGallery/', variables('batch1').solutions[copyIndex()].marketplaceName)]",
+                            "promotionCode": "",
+                            "publisher": "Microsoft"
+                          },
+                          "properties": {
+                            "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName'))]"
+                          },
+                          "type": "Microsoft.OperationsManagement/solutions"
+                        }
+                      ],
+                      "variables": {
+                        "batch1": {
+                          "solutions": [
+                            {
+                              "marketplaceName": "Security",
+                              "name": "[concat('Security', '(', parameters('workspaceName'), ')')]"
+                            },
+                            {
+                              "marketplaceName": "AgentHealthAssessment",
+                              "name": "[concat('AgentHealthAssessment', '(', parameters('workspaceName'), ')')]"
+                            },
+                            {
+                              "marketplaceName": "ChangeTracking",
+                              "name": "[concat('ChangeTracking', '(', parameters('workspaceName'), ')')]"
+                            },
+                            {
+                              "marketplaceName": "Updates",
+                              "name": "[concat('Updates', '(', parameters('workspaceName'), ')')]"
+                            },
+                            {
+                              "marketplaceName": "AzureActivity",
+                              "name": "[concat('AzureActivity', '(', parameters('workspaceName'), ')')]"
+                            },
+                            {
+                              "marketplaceName": "AzureAutomation",
+                              "name": "[concat('AzureAutomation', '(', parameters('workspaceName'), ')')]"
+                            },
+                            {
+                              "marketplaceName": "ADAssessment",
+                              "name": "[concat('ADAssessment', '(', parameters('workspaceName'), ')')]"
+                            },
+                            {
+                              "marketplaceName": "SQLAssessment",
+                              "name": "[concat('SQLAssessment', '(', parameters('workspaceName'), ')')]"
+                            },
+                            {
+                              "marketplaceName": "VMInsights",
+                              "name": "[concat('VMInsights', '(', parameters('workspaceName'), ')')]"
+                            },
+                            {
+                              "marketplaceName": "ServiceMap",
+                              "name": "[concat('ServiceMap', '(', parameters('workspaceName'), ')')]"
+                            },
+                            {
+                              "marketplaceName": "SecurityInsights",
+                              "name": "[concat('SecurityInsights', '(', parameters('workspaceName'), ')')]"
+                            }
+                          ]
+                        },
+                        "vmInsightsPerfCounters": {
+                          "linuxCpuArray": [
+                            {
+                              "counterName": "% Processor Time"
+                            }
+                          ],
+                          "linuxCpuObject": {
+                            "armResourceName": "Processor",
+                            "instanceName": "*",
+                            "intervalSeconds": 10,
+                            "objectName": "Processor"
+                          },
+                          "linuxDiskArray": [
+                            {
+                              "counterName": "% Used Inodes"
+                            },
+                            {
+                              "counterName": "Free Megabytes"
+                            },
+                            {
+                              "counterName": "% Used Space"
+                            },
+                            {
+                              "counterName": "Disk Transfers/sec"
+                            },
+                            {
+                              "counterName": "Disk Reads/sec"
+                            },
+                            {
+                              "counterName": "Disk writes/sec"
+                            }
+                          ],
+                          "linuxDiskObject": {
+                            "armResourceName": "Disk",
+                            "instanceName": "*",
+                            "intervalSeconds": 10,
+                            "objectName": "Logical Disk"
+                          },
+                          "linuxMemoryArray": [
+                            {
+                              "counterName": "Available MBytes Memory"
+                            }
+                          ],
+                          "linuxMemoryObject": {
+                            "armResourceName": "Memory",
+                            "instanceName": "*",
+                            "intervalSeconds": 10,
+                            "objectName": "Memory"
+                          },
+                          "linuxNetworkArray": [
+                            {
+                              "counterName": "Total Bytes Received"
+                            },
+                            {
+                              "counterName": "Total Bytes Transmitted"
+                            }
+                          ],
+                          "linuxNetworkObject": {
+                            "armResourceName": "Network",
+                            "instanceName": "*",
+                            "intervalSeconds": 10,
+                            "objectName": "Network"
+                          },
+                          "windowsArray": [
+                            {
+                              "armName": "counter1",
+                              "counterName": "% Free Space",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "LogicalDisk"
+                            },
+                            {
+                              "armName": "counter2",
+                              "counterName": "Avg. Disk sec/Read",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "LogicalDisk"
+                            },
+                            {
+                              "armName": "counter3",
+                              "counterName": "Avg. Disk sec/Transfer",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "LogicalDisk"
+                            },
+                            {
+                              "armName": "counter4",
+                              "counterName": "Avg. Disk sec/Write",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "LogicalDisk"
+                            },
+                            {
+                              "armName": "counter5",
+                              "counterName": "Disk Read Bytes/sec",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "LogicalDisk"
+                            },
+                            {
+                              "armName": "counter6",
+                              "counterName": "Disk Reads/sec",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "LogicalDisk"
+                            },
+                            {
+                              "armName": "counter7",
+                              "counterName": "Disk Transfers/sec",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "LogicalDisk"
+                            },
+                            {
+                              "armName": "counter8",
+                              "counterName": "Disk Write Bytes/sec",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "LogicalDisk"
+                            },
+                            {
+                              "armName": "counter9",
+                              "counterName": "Disk Writes/sec",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "LogicalDisk"
+                            },
+                            {
+                              "armName": "counter10",
+                              "counterName": "Free Megabytes",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "LogicalDisk"
+                            },
+                            {
+                              "armName": "counter11",
+                              "counterName": "Available MBytes",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "Memory"
+                            },
+                            {
+                              "armName": "counter12",
+                              "counterName": "Bytes Received/sec",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "Network Adapter"
+                            },
+                            {
+                              "armName": "counter13",
+                              "counterName": "Bytes Sent/sec",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "Network Adapter"
+                            },
+                            {
+                              "armName": "counter14",
+                              "counterName": "% Processor Time",
+                              "instanceName": "*",
+                              "intervalSeconds": 10,
+                              "objectName": "Processor"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "deploymentScope": "resourceGroup",
+                "existenceCondition": {
+                  "allOf": [
+                    {
+                      "field": "name",
+                      "like": "[parameters('workspaceName')]"
+                    },
+                    {
+                      "equals": "[parameters('workspaceRegion')]",
+                      "field": "location"
+                    }
+                  ]
+                },
+                "existenceScope": "Subscription",
+                "roleDefinitionIds": [
+                  "/providers/Microsoft.Authorization/roleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635"
+                ],
+                "type": "Microsoft.OperationalInsights/workspaces"
+              },
+              "effect": "deployIfNotExists"
+            }
+          }
+        }
+      }
+    }
+  }
+}
