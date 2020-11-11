@@ -11157,240 +11157,6 @@
                     }
                   },
                   {
-                    "policyDefinitionReferenceId": "16327914013503155102",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-PowerBIEmbedded",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "11844118267595410673",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-StreamAnalytics",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "4368425705153826594",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ExpressRoute",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "5626248916931877128",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ACI",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "1512914099147140897",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ACR",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "10524557837084143427",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VirtualNetwork",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "748227092609025529",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VM",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "13382625733167505807",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VMSS",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "8123361222326246675",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VNetGW",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "4320585871612557796",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AKS",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "5570905260641320510",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Website",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "16569001367384023423",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AnalysisService",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "17115284320105713299",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventGridTopic",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "3224181797081501679",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventGridSub",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "10106477612451538745",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-HDInsight",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "9896845597166677563",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-RedisCache",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "410363890228581644",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Relay",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "17483154915749210530",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SignalR",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "2502533802375367319",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-TrafficManager",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "11125415944257698747",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-WebServerFarm",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "5650748592956968016",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SQLMI",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "5807870637713272855",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Firewall",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "2841869771062153735",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-DataFactory",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "16872871425634437134",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CosmosDB",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "8618504520847249217",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CDNEndpoints",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
-                    "policyDefinitionReferenceId": "15018283396109242843",
-                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AA",
-                    "parameters": {
-                      "logAnalytics": {
-                        "value": "[parameters('logAnalytics')]"
-                      }
-                    }
-                  },
-                  {
                     "policyDefinitionReferenceId": "7207528800765230130",
                     "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-PublicIP",
                     "parameters": {
@@ -11580,8 +11346,242 @@
                     }
                   },
                   {
+                    "policyDefinitionReferenceId": "15018283396109242843",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AA",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "8618504520847249217",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CDNEndpoints",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "16872871425634437134",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-CosmosDB",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "2841869771062153735",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-DataFactory",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "16327914013503155102",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-PowerBIEmbedded",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "11844118267595410673",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-StreamAnalytics",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "4368425705153826594",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ExpressRoute",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "5626248916931877128",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ACI",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "1512914099147140897",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-ACR",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "10524557837084143427",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VirtualNetwork",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "748227092609025529",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VM",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "13382625733167505807",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VMSS",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "8123361222326246675",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-VNetGW",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "4320585871612557796",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AKS",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
                     "policyDefinitionReferenceId": "9435909455635709794",
                     "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-LogicAppsISE",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "5570905260641320510",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Website",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "17115284320105713299",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventGridTopic",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "3224181797081501679",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-EventGridSub",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "10106477612451538745",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-HDInsight",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "9896845597166677563",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-RedisCache",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "410363890228581644",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Relay",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "17483154915749210530",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SignalR",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "2502533802375367319",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-TrafficManager",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "11125415944257698747",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-WebServerFarm",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "5650748592956968016",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-SQLMI",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "5807870637713272855",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-Firewall",
+                    "parameters": {
+                      "logAnalytics": {
+                        "value": "[parameters('logAnalytics')]"
+                      }
+                    }
+                  },
+                  {
+                    "policyDefinitionReferenceId": "16569001367384023423",
+                    "policyDefinitionId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deploy-Diagnostics-AnalysisService",
                     "parameters": {
                       "logAnalytics": {
                         "value": "[parameters('logAnalytics')]"
@@ -11664,6 +11664,27 @@
             }
           ],
           "policyAssignments": [
+            {
+              "Identity": null,
+              "Location": "uksouth",
+              "Name": "Deny-PublicIP",
+              "PolicyAssignmentId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyAssignments/Deny-PublicIP",
+              "Properties": {
+                "Description": "Deny-PublicIP",
+                "DisplayName": "Deny-PublicIP",
+                "NotScopes": null,
+                "Parameters": null,
+                "PolicyDefinitionId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP",
+                "Scope": "/providers/Microsoft.Management/managementGroups/ES"
+              },
+              "ResourceId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyAssignments/Deny-PublicIP",
+              "ResourceName": "Deny-PublicIP",
+              "ResourceType": "Microsoft.Authorization/policyAssignments",
+              "Sku": {
+                "name": "A0",
+                "tier": "Free"
+              }
+            },
             {
               "Identity": {
                 "principalId": "a4cca704-bc40-443f-864e-e05c723b931c",
@@ -12092,12 +12113,72 @@
               "ResourceType": "Microsoft.Authorization/roleAssignments"
             },
             {
+              "Id": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/roleAssignments/6c3f3cd1-8c0f-5f5b-9b6b-f55dc96831ee",
+              "Name": "6c3f3cd1-8c0f-5f5b-9b6b-f55dc96831ee",
+              "properties": {
+                "DisplayName": "Deploy-WS-Arc-Monitoring",
+                "ObjectType": "ServicePrincipal",
+                "PrincipalId": "42c36670-cd93-4b4a-940e-2d441c314929",
+                "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                "RoleDefinitionName": "Contributor"
+              },
+              "ResourceType": "Microsoft.Authorization/roleAssignments"
+            },
+            {
               "Id": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/roleAssignments/363a06fc-6bed-4695-b1ad-e7b4144cc89d",
               "Name": "363a06fc-6bed-4695-b1ad-e7b4144cc89d",
               "properties": {
                 "DisplayName": null,
                 "ObjectType": "Unknown",
                 "PrincipalId": "44116afc-69a4-4ed5-9d40-9da86712b044",
+                "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                "RoleDefinitionName": "Contributor"
+              },
+              "ResourceType": "Microsoft.Authorization/roleAssignments"
+            },
+            {
+              "Id": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/roleAssignments/b5db64da-5bcb-5b44-90e1-540b237c3a57",
+              "Name": "b5db64da-5bcb-5b44-90e1-540b237c3a57",
+              "properties": {
+                "DisplayName": "Deploy-VMSS-Monitoring",
+                "ObjectType": "ServicePrincipal",
+                "PrincipalId": "487ee7e1-9bb5-4dfa-ae36-b294dcc882d9",
+                "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                "RoleDefinitionName": "Contributor"
+              },
+              "ResourceType": "Microsoft.Authorization/roleAssignments"
+            },
+            {
+              "Id": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/roleAssignments/6b82902e-339e-5e90-bfb7-15eff272f754",
+              "Name": "6b82902e-339e-5e90-bfb7-15eff272f754",
+              "properties": {
+                "DisplayName": "Deploy-AzActivity-Log",
+                "ObjectType": "ServicePrincipal",
+                "PrincipalId": "8d0791fa-0509-4fdb-acdc-ddef09550cac",
+                "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                "RoleDefinitionName": "Contributor"
+              },
+              "ResourceType": "Microsoft.Authorization/roleAssignments"
+            },
+            {
+              "Id": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/roleAssignments/163eccb0-ed8a-517f-abcd-9be5ce5f1bc1",
+              "Name": "163eccb0-ed8a-517f-abcd-9be5ce5f1bc1",
+              "properties": {
+                "DisplayName": "Deploy-Resource-Diag",
+                "ObjectType": "ServicePrincipal",
+                "PrincipalId": "9d856f53-ad37-4ea6-aeca-149371f2e810",
+                "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                "RoleDefinitionName": "Contributor"
+              },
+              "ResourceType": "Microsoft.Authorization/roleAssignments"
+            },
+            {
+              "Id": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/roleAssignments/e598b9b0-b576-5e1e-906d-13bf29c87b3d",
+              "Name": "e598b9b0-b576-5e1e-906d-13bf29c87b3d",
+              "properties": {
+                "DisplayName": "Deploy-Diag-ActivityLog",
+                "ObjectType": "ServicePrincipal",
+                "PrincipalId": "9e5eb7a6-a3fa-4b2b-a54f-269f99e91cf6",
                 "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
                 "RoleDefinitionName": "Contributor"
               },
@@ -12116,12 +12197,60 @@
               "ResourceType": "Microsoft.Authorization/roleAssignments"
             },
             {
+              "Id": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/roleAssignments/67847966-5356-50ec-94da-2791e5822f97",
+              "Name": "67847966-5356-50ec-94da-2791e5822f97",
+              "properties": {
+                "DisplayName": "Deploy-ASC-Monitoring",
+                "ObjectType": "ServicePrincipal",
+                "PrincipalId": "a4cca704-bc40-443f-864e-e05c723b931c",
+                "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                "RoleDefinitionName": "Contributor"
+              },
+              "ResourceType": "Microsoft.Authorization/roleAssignments"
+            },
+            {
               "Id": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/roleAssignments/98f95462-5891-430c-b6be-43f6542f9aa2",
               "Name": "98f95462-5891-430c-b6be-43f6542f9aa2",
               "properties": {
                 "DisplayName": null,
                 "ObjectType": "Unknown",
                 "PrincipalId": "b925d4d9-30a8-4655-a5ee-46395f359a1e",
+                "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                "RoleDefinitionName": "Contributor"
+              },
+              "ResourceType": "Microsoft.Authorization/roleAssignments"
+            },
+            {
+              "Id": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/roleAssignments/d39ace1b-754b-5e7a-a7f4-75c0b07c81bb",
+              "Name": "d39ace1b-754b-5e7a-a7f4-75c0b07c81bb",
+              "properties": {
+                "DisplayName": "Deploy-LX-Arc-Monitoring",
+                "ObjectType": "ServicePrincipal",
+                "PrincipalId": "c2dd9571-09da-432d-b481-e5670203a6c7",
+                "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                "RoleDefinitionName": "Contributor"
+              },
+              "ResourceType": "Microsoft.Authorization/roleAssignments"
+            },
+            {
+              "Id": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/roleAssignments/7ffbbff0-3b5b-5896-8dd9-6ab7477223c4",
+              "Name": "7ffbbff0-3b5b-5896-8dd9-6ab7477223c4",
+              "properties": {
+                "DisplayName": "Deploy-VM-Monitoring",
+                "ObjectType": "ServicePrincipal",
+                "PrincipalId": "c467e3d9-7461-4dbc-be80-a4443d3a3ac3",
+                "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+                "RoleDefinitionName": "Contributor"
+              },
+              "ResourceType": "Microsoft.Authorization/roleAssignments"
+            },
+            {
+              "Id": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/roleAssignments/4f92fb40-b3c8-5ca5-8c69-944b97987bec",
+              "Name": "4f92fb40-b3c8-5ca5-8c69-944b97987bec",
+              "properties": {
+                "DisplayName": "Deploy-ASC-Security",
+                "ObjectType": "ServicePrincipal",
+                "PrincipalId": "fa2bc73c-061f-4d5d-a398-bbf0d839e800",
                 "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
                 "RoleDefinitionName": "Contributor"
               },
