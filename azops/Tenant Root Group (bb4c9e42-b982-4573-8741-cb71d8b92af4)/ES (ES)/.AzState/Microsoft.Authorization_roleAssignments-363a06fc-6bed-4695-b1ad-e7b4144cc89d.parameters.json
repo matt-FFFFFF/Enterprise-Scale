@@ -1,0 +1,20 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Id": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/roleAssignments/363a06fc-6bed-4695-b1ad-e7b4144cc89d",
+        "Name": "363a06fc-6bed-4695-b1ad-e7b4144cc89d",
+        "properties": {
+          "DisplayName": null,
+          "ObjectType": "Unknown",
+          "PrincipalId": "44116afc-69a4-4ed5-9d40-9da86712b044",
+          "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+          "RoleDefinitionName": "Contributor"
+        },
+        "ResourceType": "Microsoft.Authorization/roleAssignments"
+      }
+    }
+  }
+}
