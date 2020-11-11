@@ -1,0 +1,20 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Id": "/subscriptions/be3ae466-f78a-4e60-b972-d9c35a4e7b3b/providers/Microsoft.Authorization/roleAssignments/ca329e1e-3ce4-41a6-bee8-2877faebdbb1",
+        "Name": "ca329e1e-3ce4-41a6-bee8-2877faebdbb1",
+        "properties": {
+          "DisplayName": "Matt White",
+          "ObjectType": "User",
+          "PrincipalId": "6287a5ba-7f1e-4403-b3dd-ef516cc7a07d",
+          "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/ceb6c80f-abfc-4a9e-b47d-fe00e616c4e5",
+          "RoleDefinitionName": "Owner modified"
+        },
+        "ResourceType": "Microsoft.Authorization/roleAssignments"
+      }
+    }
+  }
+}
