@@ -1,0 +1,20 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Id": "/providers/Microsoft.Management/managementGroups/ES-identity/providers/Microsoft.Authorization/roleAssignments/13f2d62d-cc8b-4f0b-b204-d9e2120cb014",
+        "Name": "13f2d62d-cc8b-4f0b-b204-d9e2120cb014",
+        "properties": {
+          "DisplayName": "AzOpsTF",
+          "ObjectType": "ServicePrincipal",
+          "PrincipalId": "4c4b17c2-26c9-49a0-a122-6c51177bede3",
+          "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/8e3af657-a8ff-443c-a75c-2fe8c4bcb635",
+          "RoleDefinitionName": "Owner"
+        },
+        "ResourceType": "Microsoft.Authorization/roleAssignments"
+      }
+    }
+  }
+}
