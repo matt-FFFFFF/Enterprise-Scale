@@ -11665,6 +11665,27 @@
           ],
           "policyAssignments": [
             {
+              "Identity": null,
+              "Location": "uksouth",
+              "Name": "Deny-PublicIP",
+              "PolicyAssignmentId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyAssignments/Deny-PublicIP",
+              "Properties": {
+                "Description": "Deny-PublicIP",
+                "DisplayName": "Deny-PublicIP",
+                "NotScopes": null,
+                "Parameters": null,
+                "PolicyDefinitionId": "/providers/Microsoft.Management/managementgroups/ES/providers/Microsoft.Authorization/policyDefinitions/Deny-PublicIP",
+                "Scope": "/providers/Microsoft.Management/managementGroups/ES"
+              },
+              "ResourceId": "/providers/Microsoft.Management/managementGroups/ES/providers/Microsoft.Authorization/policyAssignments/Deny-PublicIP",
+              "ResourceName": "Deny-PublicIP",
+              "ResourceType": "Microsoft.Authorization/policyAssignments",
+              "Sku": {
+                "name": "A0",
+                "tier": "Free"
+              }
+            },
+            {
               "Identity": {
                 "principalId": "a4cca704-bc40-443f-864e-e05c723b931c",
                 "tenantId": "bb4c9e42-b982-4573-8741-cb71d8b92af4",
