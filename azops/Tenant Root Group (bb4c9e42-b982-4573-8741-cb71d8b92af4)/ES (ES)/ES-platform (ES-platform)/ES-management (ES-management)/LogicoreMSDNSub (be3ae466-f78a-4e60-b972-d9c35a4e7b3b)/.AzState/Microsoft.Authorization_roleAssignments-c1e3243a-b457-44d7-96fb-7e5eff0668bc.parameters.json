@@ -1,0 +1,20 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "input": {
+      "value": {
+        "Id": "/subscriptions/be3ae466-f78a-4e60-b972-d9c35a4e7b3b/providers/Microsoft.Authorization/roleAssignments/c1e3243a-b457-44d7-96fb-7e5eff0668bc",
+        "Name": "c1e3243a-b457-44d7-96fb-7e5eff0668bc",
+        "properties": {
+          "DisplayName": "natasha shamerza",
+          "ObjectType": "User",
+          "PrincipalId": "9cc402c1-d0e8-47e3-bef5-0b774a54d61c",
+          "RoleDefinitionId": "/providers/Microsoft.Authorization/RoleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+          "RoleDefinitionName": "Contributor"
+        },
+        "ResourceType": "Microsoft.Authorization/roleAssignments"
+      }
+    }
+  }
+}
